@@ -25,17 +25,21 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-3 bg-light">
-                    <div class="input-group mb-3 mt-3">
+                    <form class="input-group mb-3 mt-3" id="addListForm">
                         <input type="text" class="form-control" id="addListInput" placeholder="Enter list name...">
-                        <button class="btn btn-primary" type="button" onclick="addList()">+</button>
-                    </div>
+                        <button class="btn btn-primary" type="submit">+</button>
+                    </form>
                     <ul class="list-group mb-3" id="allLists">
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Subheading</div>
                                 Content for list item
                             </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
+                            <span class="d-flex flex-column justify-content-between">
+                                <span class="badge bg-danger rounded-pill mb-1" id="deleteListButton"><i class="bi bi-trash-fill"></i></span>
+                                <span class="badge bg-warning rounded-pill" id="editListButton"><i class="bi bi-pencil-fill"></i></span>
+                            </span>
+
                         </li>
                     </ul>
                 </div>
