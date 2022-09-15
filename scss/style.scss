@@ -6,3 +6,12 @@
     
 //     // max-height: 100vh;
 // }
+
+@media (max-width: 750px){
+    #viewToDoList{
+        display: none;
+    }
+    #listView{
+        width: 100%;
+    }
+}
