@@ -14,7 +14,7 @@
     <title>Document</title>
 </head>
 
-<body>
+<body class="">
     <div class="outer">
         <nav class="navbar bg-dark">
             <div class="container-fluid d-flex justify-content-between text-light">
@@ -26,20 +26,24 @@
             <div class="row">
                 <div class="col-3" id="listView">
                     <form class="input-group mb-3 mt-3" id="addListForm">
-                        <input type="text" class="form-control" id="addListInput" placeholder="Enter list name...">
+                        <input type="text" class="form-control" id="addListInput" placeholder="New list">
                         <button class="btn btn-primary" type="submit">+</button>
                     </form>
                     <ul class="list-group mb-3 h-100" id="allLists">
                     </ul>
                 </div>
                 <div class="col-8" id="viewToDoList">
-                    <span>
-                        <h1>ToDo List</h1>
-                        <p>Created: 00/00/0000</p>
+                    <span id="listViewHeader">
+                        <h1>Open a List</h1>
+                        <p></p>
                     </span>
+                    <form class="input-group mb-3 mt-3" id="addTaskForm">
+                        <input type="text" class="form-control" id="addTaskInput" placeholder="New task">
+                        <button class="btn btn-primary" type="submit">+</button>
+                    </form>
                     <div class="container mt-3">
-                        <ul class="list-group">
-                            <li class="list-group-item list-group-item-action d-flex justify-content-between">
+                        <ul class="list-group" id="taskList">
+                            <!-- <li class="list-group-item list-group-item-action d-flex justify-content-between">
                                 <span>
                                     <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
                                     <label class="form-check-label" for="firstCheckbox">First checkbox</label>
@@ -74,7 +78,7 @@
                                     <button type="button" class="btn btn-danger btn-sm"><i
                                             class="bi bi-trash-fill"></i></button>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>

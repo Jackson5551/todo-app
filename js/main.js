@@ -1,7 +1,9 @@
 const addListInput = document.querySelector('#addListInput')
 const allListsUL = document.querySelector('#allLists')
+const taskListUL = document.querySelector('#taskList')
 const viewToDoListDiv = document.querySelector('#viewToDoList')
 const addListForm = document.querySelector('#addListForm')
+const listViewHeader = document.querySelector('#listViewHeader')
 let deleteListButton = document.querySelector('#deleteListButton')
 
 
@@ -46,8 +48,13 @@ class storageHandler {
             if (+list.id === +date) {
                 listsFromLocalStorage.splice(i, 1);
                 console.log("SUCCESS " + i)
-            } else{
-                console.log("FAILED " + i )
+                let header = listViewHeader
+                header.innerHTML = `
+                <h1>Open a List</h1>
+                <p></p>
+                `
+            } else {
+                console.log("FAILED " + i)
             }
             i++
         })
@@ -76,7 +83,7 @@ class UIHandler {
 
                 <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
                     <button type="button" class="btn btn-danger" id="deleteListButton" onclick="storageHandler.removeList(${list.id})"><i class="bi bi-trash-fill" id="deleteListButton"></i></button>
-                    <button type="button" class="btn btn-light"><i class="bi bi-pencil-fill"></i></button>
+                    <button type="button" class="btn btn-secondary"><i class="bi bi-pencil-fill"></i></button>
                 </div>
             </span>
         </li>
@@ -94,10 +101,9 @@ class UIHandler {
                     This is a test card
             </div>
             <span class="d-flex flex-column justify-content-between">
-
                 <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-                    <button type="button" class="btn btn-danger" id="deleteListButton" onclick="storageHandler.removeList(${list.id})"><i class="bi bi-trash-fill" id="deleteListButton"></i></button>
-                    <button type="button" class="btn btn-light"><i class="bi bi-pencil-fill"></i></button>
+                    <button type="button" class="btn btn-outline-light" id="deleteListButton" onclick="storageHandler.removeList(${list.id})"><i class="bi bi-trash-fill" id="deleteListButton"></i></button>
+                    <button type="button" class="btn btn-outline-light"><i class="bi bi-pencil-fill"></i></button>
                 </div>
             </span>
         </li>
@@ -129,13 +135,31 @@ addListForm.addEventListener('submit', e => {
 
 allListsUL.addEventListener('click', e => {
     if (e.target.tagName.toLowerCase() === 'li') {
-        selectedListID = e.target.id
-        saveAndRender()
+        if (e.target.id === selectedListID) {
+            selectedListID = null
+            saveAndRender()
+            closeList()
+        } else if (selectedListID != null || selectedListID === null) {
+            selectedListID = e.target.id
+            saveAndRender()
+            let lists = storageHandler.getLists() || []
+            lists.forEach((list, i) =>{
+                if (+list.id === +selectedListID) {
+                    let listToOpen = lists[i]
+                    openList(listToOpen)
+                } else {
+                    console.log('NOPE')
+                }
+                i++
+            })
+            
+        }
+
     }
 })
 
 // deleteListButton.addEventListener('click', e => {
-    
+
 //     console.log('Im here')
 //     if (e.target.tagName.toLowerCase() === 'li') {
 //         listToRemove = e.target.id
@@ -173,6 +197,50 @@ function save() {
 function saveAndRender() {
     save()
     render()
+}
+
+function renderTasks(task) {
+    let taskElement = taskListUL
+    let isComplete
+    if (task.completed === true) {
+        isComplete = 'checked'
+    }
+    taskElement.innerHTML = `
+        <li class="list-group-item list-group-item-action d-flex justify-content-between">
+            <span>
+                <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox" ${isComplete}>
+                <label class="form-check-label" for="firstCheckbox">${task.name}</label>
+            </span>
+            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                <button type="button" class="btn btn-light btn-sm"><i
+                    class="bi bi-pencil-fill"></i></button>
+                <button type="button" class="btn btn-danger btn-sm"><i
+                    class="bi bi-trash-fill"></i></button>
+            </div>
+        </li>
+    `
+}
+
+function closeList() {
+    clearElement(taskListUL)
+    let header = listViewHeader
+    header.innerHTML = `
+    <h1>Open a List</h1>
+    <p></p>
+    `
+}
+function openList(list) {
+    let listTasks = list.tasks || []
+    let header = listViewHeader
+    closeList()
+    console.log(list)
+    header.innerHTML = `
+    <h1>${list.name}</h1>
+    <p>${list.id}</p>
+    `
+    tasks.forEach(task => {
+        renderTasks(task)
+    });
 }
 
 document.addEventListener('DOMContentLoaded', renderLists())
