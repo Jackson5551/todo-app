@@ -4,7 +4,9 @@ const taskListUL = document.querySelector('#taskList')
 const viewToDoListDiv = document.querySelector('#viewToDoList')
 const addListForm = document.querySelector('#addListForm')
 const listViewHeader = document.querySelector('#listViewHeader')
-let deleteListButton = document.querySelector('#deleteListButton')
+const addTaskForm = document.querySelector('#addTaskForm')
+const addTaskInput = document.querySelector('#addTaskInput')
+// let deleteListButton = document.querySelector('#deleteListButton')
 
 
 const LOCAL_STORAGE_KEY = 'todoApp.listKey'
@@ -133,6 +135,41 @@ addListForm.addEventListener('submit', e => {
     }
 })
 
+addTaskForm.addEventListener('submit', e => {
+    e.preventDefault()
+    console.log('Here')
+    const taskName = addTaskInput.value
+    if (taskName == null || taskName == '') {
+        return
+    } else {
+        const newTask = buildObjects.createTask(taskName)
+        let currentListID = selectedListID
+        if (currentListID === null) return
+        lists = storageHandler.getLists()
+        lists.forEach((list, i) => {
+            if (+list.id == +currentListID) {
+                taskList = lists.tasks || []
+                
+                listsFromLocalStorage[i].tasks.push(taskList)
+
+                taskList.push(newTask)
+                console.log(taskList)
+                list.tasks.push(listsFromLocalStorage)
+                console.log(listsFromLocalStorage[i])
+
+                saveAndRender()
+            } else {
+                return
+                console.log('FAILED')
+            }
+            i++
+        });
+        addTaskInput.value = null
+
+    }
+})
+
+
 allListsUL.addEventListener('click', e => {
     if (e.target.tagName.toLowerCase() === 'li') {
         if (e.target.id === selectedListID) {
@@ -143,16 +180,17 @@ allListsUL.addEventListener('click', e => {
             selectedListID = e.target.id
             saveAndRender()
             let lists = storageHandler.getLists() || []
-            lists.forEach((list, i) =>{
+            lists.forEach((list, i) => {
                 if (+list.id === +selectedListID) {
                     let listToOpen = lists[i]
                     openList(listToOpen)
                 } else {
-                    console.log('NOPE')
+                    return
+                    // console.log('NOPE')
                 }
                 i++
             })
-            
+
         }
 
     }
