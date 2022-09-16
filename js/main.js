@@ -64,6 +64,16 @@ class storageHandler {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(listsFromLocalStorage))
         saveAndRender()
     }
+    static removeTask(list,id){
+        list.tasks.forEach((task, i) => {
+            if (task.id == id) {
+                list.tasks.splice(i,1)
+            } else {
+                return
+            }
+            i++
+        });
+    }
 }
 
 class UIHandler {
@@ -113,9 +123,6 @@ class UIHandler {
         view.innerHTML = listToAdd + view.innerHTML
         // console.log(list)
     }
-    static deleteList(listID) {
-
-    }
 }
 
 // window.addEventListener('DOMContentLoaded', render())
@@ -148,27 +155,20 @@ addTaskForm.addEventListener('submit', e => {
         lists = storageHandler.getLists()
         lists.forEach((list, i) => {
             if (+list.id == +currentListID) {
-                taskList = lists.tasks || []
+                taskList = lists.tasks || []                
                 
-                listsFromLocalStorage[i].tasks.push(taskList)
-
                 taskList.push(newTask)
-                console.log(taskList)
+                listsFromLocalStorage[i].tasks.push(newTask)
                 list.tasks.push(listsFromLocalStorage)
-                console.log(listsFromLocalStorage[i])
-
-                saveAndRender()
+                renderTasks(newTask)
             } else {
                 return
-                console.log('FAILED')
             }
             i++
+            addTaskInput.value = null
         });
-        addTaskInput.value = null
-
     }
 })
-
 
 allListsUL.addEventListener('click', e => {
     if (e.target.tagName.toLowerCase() === 'li') {
@@ -195,17 +195,6 @@ allListsUL.addEventListener('click', e => {
 
     }
 })
-
-// deleteListButton.addEventListener('click', e => {
-
-//     console.log('Im here')
-//     if (e.target.tagName.toLowerCase() === 'li') {
-//         listToRemove = e.target.id
-//         storageHandler.removeList(listToRemove)
-//         // listsFromLocalStorage = listsFromLocalStorage.filter(list => list.id !== selectedListID)
-//         selectedListID = null
-//     }
-// })
 
 function render() {
     clearElement(allListsUL)
@@ -238,16 +227,18 @@ function saveAndRender() {
 }
 
 function renderTasks(task) {
+    console.log(task.name)
     let taskElement = taskListUL
     let isComplete
+    const dateCreated = new Date(+task.id).toDateString()
     if (task.completed === true) {
         isComplete = 'checked'
     }
     taskElement.innerHTML = `
-        <li class="list-group-item list-group-item-action d-flex justify-content-between">
+        <li id="${task.id}" class="list-group-item list-group-item-action d-flex justify-content-between">
             <span>
                 <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox" ${isComplete}>
-                <label class="form-check-label" for="firstCheckbox">${task.name}</label>
+                <label class="form-check-label" for="firstCheckbox">${task.name}</label> [<em>${dateCreated}</em>]
             </span>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                 <button type="button" class="btn btn-light btn-sm"><i
@@ -256,7 +247,7 @@ function renderTasks(task) {
                     class="bi bi-trash-fill"></i></button>
             </div>
         </li>
-    `
+    ` + taskElement.innerHTML
 }
 
 function closeList() {
@@ -272,11 +263,12 @@ function openList(list) {
     let header = listViewHeader
     closeList()
     console.log(list)
+    const dateCreated = new Date(+list.id)
     header.innerHTML = `
     <h1>${list.name}</h1>
-    <p>${list.id}</p>
+    <p>Created: ${dateCreated}</p>
     `
-    tasks.forEach(task => {
+    listTasks.forEach(task => {
         renderTasks(task)
     });
 }
