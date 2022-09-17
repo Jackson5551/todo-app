@@ -55,6 +55,7 @@ class storageHandler {
                 <h1>Open a List</h1>
                 <p></p>
                 `
+                clearElement(taskListUL)
             } else {
                 console.log("FAILED " + i)
             }
@@ -64,15 +65,30 @@ class storageHandler {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(listsFromLocalStorage))
         saveAndRender()
     }
-    static removeTask(list,id){
-        list.tasks.forEach((task, i) => {
-            if (task.id == id) {
-                list.tasks.splice(i,1)
-            } else {
-                return
+    static removeTask(id){
+        // console.log("List: "+parent)
+        // console.log("ID: "+id)
+        // parent.tasks.forEach((task, i) => {
+        //     if (+task.id == +id) {
+        //         console.log('Yep '+i)
+        //         listsFromLocalStorage[i].tasks.splice(i,1)
+        //         saveAndRender()
+        //     } else {
+        //         console.log('Nope '+i)
+        //         return
+        //     }
+        //     i++
+        // });
+        const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID) || []
+        // console.log("List: "+selectedList.name)
+        selectedList.tasks.forEach((task, i) => {
+            if(+task.id == +id){
+                console.log('Yep!')
             }
             i++
         });
+        // selectedList.tasks = selectedList.tasks.filter(task => task.)
+        // saveAndRender()
     }
 }
 
@@ -160,7 +176,7 @@ addTaskForm.addEventListener('submit', e => {
                 taskList.push(newTask)
                 listsFromLocalStorage[i].tasks.push(newTask)
                 list.tasks.push(listsFromLocalStorage)
-                renderTasks(newTask)
+                renderTasks(list, newTask)
             } else {
                 return
             }
@@ -208,6 +224,7 @@ function renderLists() {
             UIHandler.addListToView(list)
         } else if (list.id == +selectedListID) {
             UIHandler.updateToActive(list)
+            openList(list)
         } else {
             UIHandler.addListToView(list)
         }
@@ -226,8 +243,9 @@ function saveAndRender() {
     render()
 }
 
-function renderTasks(task) {
-    console.log(task.name)
+function renderTasks(parent, task) {
+    // console.log("Parent: "+parent)
+    let parentToSend = JSON.stringify(parent)
     let taskElement = taskListUL
     let isComplete
     const dateCreated = new Date(+task.id).toDateString()
@@ -237,13 +255,13 @@ function renderTasks(task) {
     taskElement.innerHTML = `
         <li id="${task.id}" class="list-group-item list-group-item-action d-flex justify-content-between">
             <span>
-                <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox" ${isComplete}>
-                <label class="form-check-label" for="firstCheckbox">${task.name}</label> [<em>${dateCreated}</em>]
+                <input class="form-check-input me-1" type="checkbox" value="" id="${task.id + 'task'}" ${isComplete}>
+                <label class="form-check-label" for="${task.id + 'task'}">${task.name}</label> [<em>${dateCreated}</em>]
             </span>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                 <button type="button" class="btn btn-light btn-sm"><i
                     class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn btn-danger btn-sm"><i
+                <button type="button" class="btn btn-danger btn-sm" onClick="storageHandler.removeTask(${task.id})"><i
                     class="bi bi-trash-fill"></i></button>
             </div>
         </li>
@@ -269,7 +287,7 @@ function openList(list) {
     <p>Created: ${dateCreated}</p>
     `
     listTasks.forEach(task => {
-        renderTasks(task)
+        renderTasks(list, task)
     });
 }
 
