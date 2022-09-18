@@ -83,7 +83,10 @@ class storageHandler {
         // console.log("List: "+selectedList.name)
         selectedList.tasks.forEach((task, i) => {
             if(+task.id == +id){
-                console.log('Yep!')
+                console.log('Yep! ' + task.name)
+                selectedList.tasks.splice(i,1)
+                console.log(selectedList)
+                saveAndRender()
             }
             i++
         });
