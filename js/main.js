@@ -174,11 +174,12 @@ addTaskForm.addEventListener('submit', e => {
         lists = storageHandler.getLists()
         lists.forEach((list, i) => {
             if (+list.id == +currentListID) {
-                taskList = lists.tasks || []                
+                taskList = lists.tasks || []
                 
                 taskList.push(newTask)
                 listsFromLocalStorage[i].tasks.push(newTask)
                 list.tasks.push(listsFromLocalStorage)
+                save()
                 renderTasks(list, newTask)
             } else {
                 return
