@@ -292,6 +292,11 @@ function openList(list) {
     listTasks.forEach(task => {
         renderTasks(list, task)
     });
+    if(window.innerWidth <= 750){
+        console.log('Small')
+    } else {
+        console.log('Big')
+    }
 }
 
 document.addEventListener('DOMContentLoaded', renderLists())
