@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/main.js" defer></script>
@@ -16,69 +16,33 @@
 
 <body class="">
     <div class="outer">
-        <nav class="navbar bg-dark">
-            <div class="container-fluid d-flex justify-content-between text-light">
-                <a class="navbar-brand text-light">ToDo List</a>
+        <nav class="nav">
+            <div class="">
+                <a class="">ToDo List</a>
                 <div><i class="bi bi-gear-fill"></i> <i class="bi bi-person-circle"></i></div>
             </div>
         </nav>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-3" id="listView">
-                    <form class="input-group mb-3 mt-3" id="addListForm">
-                        <input type="text" class="form-control" id="addListInput" placeholder="New list">
+        <div class="container">
+            <div class="wrapper">
+                <div class="" id="listView">
+                    <form class="input-group" id="addListForm">
+                        <input type="text" class="" id="addListInput" placeholder="New list">
                         <button class="btn btn-primary" type="submit">+</button>
                     </form>
-                    <ul class="list-group mb-3 h-100" id="allLists">
+                    <ul class="allLists" id="allLists">
                     </ul>
                 </div>
-                <div class="col-8" id="viewToDoList">
+                <div class="" id="viewToDoList">
                     <span id="listViewHeader">
                         <h1>Open a List</h1>
                         <p></p>
                     </span>
-                    <form class="input-group mb-3 mt-3" id="addTaskForm">
-                        <input type="text" class="form-control" id="addTaskInput" placeholder="New task">
+                    <form class="input-group" id="addTaskForm">
+                        <input type="text" class="" id="addTaskInput" placeholder="New task">
                         <button class="btn btn-primary" type="submit">+</button>
                     </form>
-                    <div class="container mt-3">
-                        <ul class="list-group" id="taskList">
-                            <!-- <li class="list-group-item list-group-item-action d-flex justify-content-between">
-                                <span>
-                                    <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
-                                    <label class="form-check-label" for="firstCheckbox">First checkbox</label>
-                                </span>
-                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                    <button type="button" class="btn btn-light btn-sm"><i
-                                            class="bi bi-pencil-fill"></i></button>
-                                    <button type="button" class="btn btn-danger btn-sm"><i
-                                            class="bi bi-trash-fill"></i></button>
-                                </div>
-                            </li>
-                            <li class="list-group-item list-group-item-action d-flex justify-content-between">
-                                <span>
-                                    <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox">
-                                    <label class="form-check-label" for="secondCheckbox">Second checkbox</label>
-                                </span>
-                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                    <button type="button" class="btn btn-light btn-sm"><i
-                                            class="bi bi-pencil-fill"></i></button>
-                                    <button type="button" class="btn btn-danger btn-sm"><i
-                                            class="bi bi-trash-fill"></i></button>
-                                </div>
-                            </li>
-                            <li class="list-group-item list-group-item-action d-flex justify-content-between">
-                                <span>
-                                    <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
-                                    <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>
-                                </span>
-                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                    <button type="button" class="btn btn-light btn-sm"><i
-                                            class="bi bi-pencil-fill"></i></button>
-                                    <button type="button" class="btn btn-danger btn-sm"><i
-                                            class="bi bi-trash-fill"></i></button>
-                                </div>
-                            </li> -->
+                    <div class="">
+                        <ul class="" id="taskList">
                         </ul>
                     </div>
                 </div>

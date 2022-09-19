@@ -1,3 +1,92 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.allLists {
+  list-style-type: none;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+}
+.allLists .listCard-1 {
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  border: 1px solid #323031;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+#listView {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+}
+
+#viewToDOList {
+  width: 80%;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.input-group {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+input[type=text] {
+  border: 1px solid #323031;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.btn, .btn-secondary, .btn-danger, .btn-primary {
+  padding: 10px;
+  border-radius: 5px;
+  border-style: none;
+  cursor: pointer;
+}
+
+.btn:active, .btn-secondary:active, .btn-danger:active, .btn-primary:active {
+  background-color: #323031;
+  color: white;
+}
+
+.btn-primary {
+  background-color: #084c61;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #db3a34;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #ffc857;
+  color: white;
+}
+
 @media (max-width: 750px) {
   #viewToDoList {
     display: none;

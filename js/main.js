@@ -96,14 +96,14 @@ class UIHandler {
     static addListToView(list) {
         const view = allListsUL;
         let listToAdd = `
-        <li id="${list.id}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold">${list.name}</div>
+        <li id="${list.id}" class="listCard-1">
+            <div class="">
+                <div class="">${list.name}</div>
                     This is a test card
             </div>
-            <span class="d-flex flex-column justify-content-between">
+            <span class="">
 
-                <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                <div class="" role="group" aria-label="Vertical button group">
                     <button type="button" class="btn btn-danger" id="deleteListButton" onclick="storageHandler.removeList(${list.id})"><i class="bi bi-trash-fill" id="deleteListButton"></i></button>
                     <button type="button" class="btn btn-secondary"><i class="bi bi-pencil-fill"></i></button>
                 </div>
@@ -116,15 +116,15 @@ class UIHandler {
     static updateToActive(list) {
         const view = allListsUL;
         let listToAdd = `
-        <li id="${list.id}" class="list-group-item list-group-item-action active d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold">${list.name}</div>
+        <li id="${list.id}" class="listCard-1">
+            <div class="">
+                <div class="">${list.name}</div>
                     This is a test card
             </div>
-            <span class="d-flex flex-column justify-content-between">
-                <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-                    <button type="button" class="btn btn-outline-light" id="deleteListButton" onclick="storageHandler.removeList(${list.id})"><i class="bi bi-trash-fill" id="deleteListButton"></i></button>
-                    <button type="button" class="btn btn-outline-light"><i class="bi bi-pencil-fill"></i></button>
+            <span class="">
+                <div class="" aria-label="Vertical button group">
+                    <button type="button" class="btn btn-danger" id="deleteListButton" onclick="storageHandler.removeList(${list.id})"><i class="bi bi-trash-fill" id="deleteListButton"></i></button>
+                    <button type="button" class="btn btn-secondary"><i class="bi bi-pencil-fill"></i></button>
                 </div>
             </span>
         </li>
@@ -140,15 +140,15 @@ class UIHandler {
             isComplete = 'checked'
         }
         taskElement.innerHTML = `
-        <li id="${task.id}" class="list-group-item list-group-item-action d-flex justify-content-between">
+        <li id="${task.id}" class="">
             <span>
-                <input class="form-check-input me-1" type="checkbox" value="" id="${task.id + 'task'}" ${isComplete}>
-                <label class="form-check-label" for="${task.id + 'task'}">${task.name}</label> [<em>${dateCreated}</em>]
+                <input class="" type="checkbox" value="" id="${task.id + 'task'}" ${isComplete}>
+                <label class="" for="${task.id + 'task'}">${task.name}</label> [<em>${dateCreated}</em>]
             </span>
-            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                <button type="button" class="btn btn-light btn-sm"><i
+            <div class="" role="group" aria-label="Basic mixed styles example">
+                <button type="button" class="btn btn-secondary"><i
                     class="bi bi-pencil-fill"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick="storageHandler.removeTask(${task.id})"><i
+                <button type="button" class="btn btn-danger" onClick="storageHandler.removeTask(${task.id})"><i
                     class="bi bi-trash-fill"></i></button>
             </div>
         </li>
