@@ -1,3 +1,6 @@
+// ======================================================
+// Variables
+// ======================================================
 const addListInput = document.querySelector('#addListInput')
 const allListsUL = document.querySelector('#allLists')
 const taskListUL = document.querySelector('#taskList')
@@ -6,43 +9,46 @@ const addListForm = document.querySelector('#addListForm')
 const listViewHeader = document.querySelector('#listViewHeader')
 const addTaskForm = document.querySelector('#addTaskForm')
 const addTaskInput = document.querySelector('#addTaskInput')
-// let deleteListButton = document.querySelector('#deleteListButton')
-
 
 const LOCAL_STORAGE_KEY = 'todoApp.listKey'
 const LOCAL_STORAGE_KEY_IS_SELECTED_ID_KEY = 'todoApp.isSelected'
 let listsFromLocalStorage = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || []
 let selectedListID = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_IS_SELECTED_ID_KEY)) || []
 
+// ======================================================
+// Classes
+// ======================================================
+
+// Class to hold constructors for the lists and tasks
 class buildObjects {
+    // List
     static createList(name) {
         return { id: Date.now().toString(), name: name, desc: '', tasks: [] }
     }
+    // Task. Will be stored in the tasks:[] of the list
     static createTask(name) {
         return { id: Date.now().toString(), name: name, desc: '', completed: false }
     }
 }
 
+// Class to interface with local storage
 class storageHandler {
+    // Retrieves the lists in local storage
     static getLists() {
         let lists;
         if (localStorage.getItem(LOCAL_STORAGE_KEY) === null) {
             lists = []
-            // console.log(lists)
         } else {
             lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
-            // console.log(lists)
         }
-        // console.log(lists)
         return lists;
     }
-
+    // Adds the list
     static addList(list) {
-        // let lists = storageHandler.getLists()
         listsFromLocalStorage.push(list)
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(listsFromLocalStorage))
     }
-
+    // Removes the list
     static removeList(date) {
         console.log("Clicked!" + +date)
         let lists = storageHandler.getLists()
@@ -55,55 +61,40 @@ class storageHandler {
                 <h1>Open a List</h1>
                 <p></p>
                 `
-                clearElement(taskListUL)
+                renderFunc.clearElement(taskListUL)
             } else {
                 console.log("FAILED " + i)
             }
             i++
         })
-        // listsFromLocalStorage.push(lists)
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(listsFromLocalStorage))
-        saveAndRender()
+        renderFunc.saveAndRender()
     }
-    static removeTask(id){
-        // console.log("List: "+parent)
-        // console.log("ID: "+id)
-        // parent.tasks.forEach((task, i) => {
-        //     if (+task.id == +id) {
-        //         console.log('Yep '+i)
-        //         listsFromLocalStorage[i].tasks.splice(i,1)
-        //         saveAndRender()
-        //     } else {
-        //         console.log('Nope '+i)
-        //         return
-        //     }
-        //     i++
-        // });
+    // Removes a task
+    static removeTask(id) {
         const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID) || []
-        // console.log("List: "+selectedList.name)
         selectedList.tasks.forEach((task, i) => {
-            if(+task.id == +id){
+            if (+task.id == +id) {
                 console.log('Yep! ' + task.name)
-                selectedList.tasks.splice(i,1)
+                selectedList.tasks.splice(i, 1)
                 console.log(selectedList)
-                saveAndRender()
+                renderFunc.saveAndRender()
             }
             i++
         });
-        // selectedList.tasks = selectedList.tasks.filter(task => task.)
-        // saveAndRender()
+    }
+    // Saves everything to local storage
+    static save() {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(listsFromLocalStorage))
+        localStorage.setItem(LOCAL_STORAGE_KEY_IS_SELECTED_ID_KEY, JSON.stringify(selectedListID))
     }
 }
 
+// Class to create HTML elements and output them
 class UIHandler {
-    // static displayLists() {
-    //     // const lists = storageHandler.getLists();
-    //     clearElement(allListsUL)
-    //     listsFromLocalStorage.forEach((list) => UIHandler.addListToView(list));
-    // }
+    // Create list card
     static addListToView(list) {
         const view = allListsUL;
-        // clearElement(view)
         let listToAdd = `
         <li id="${list.id}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
@@ -120,11 +111,10 @@ class UIHandler {
         </li>
         `
         view.innerHTML = listToAdd + view.innerHTML
-        // console.log(list)
     }
+    // Update list card element to active
     static updateToActive(list) {
         const view = allListsUL;
-        // clearElement(view)
         let listToAdd = `
         <li id="${list.id}" class="list-group-item list-group-item-action active d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
@@ -140,123 +130,16 @@ class UIHandler {
         </li>
         `
         view.innerHTML = listToAdd + view.innerHTML
-        // console.log(list)
     }
-}
-
-// window.addEventListener('DOMContentLoaded', render())
-
-addListForm.addEventListener('submit', e => {
-    e.preventDefault()
-    const listName = addListInput.value
-    if (listName == null || listName == '') {
-        return
-    } else {
-        const newList = buildObjects.createList(listName)
-        addListInput.value = null
-        listsFromLocalStorage.push(newList)
-        // console.log(newList)
-        selectedListID = newList.id
-        saveAndRender()
-    }
-})
-
-addTaskForm.addEventListener('submit', e => {
-    e.preventDefault()
-    console.log('Here')
-    const taskName = addTaskInput.value
-    if (taskName == null || taskName == '') {
-        return
-    } else {
-        const newTask = buildObjects.createTask(taskName)
-        let currentListID = selectedListID
-        if (currentListID === null) return
-        lists = storageHandler.getLists()
-        lists.forEach((list, i) => {
-            if (+list.id == +currentListID) {
-                taskList = lists.tasks || []
-                
-                taskList.push(newTask)
-                listsFromLocalStorage[i].tasks.push(newTask)
-                list.tasks.push(listsFromLocalStorage)
-                save()
-                renderTasks(list, newTask)
-            } else {
-                return
-            }
-            i++
-            addTaskInput.value = null
-        });
-    }
-})
-
-allListsUL.addEventListener('click', e => {
-    if (e.target.tagName.toLowerCase() === 'li') {
-        if (e.target.id === selectedListID) {
-            selectedListID = null
-            saveAndRender()
-            closeList()
-        } else if (selectedListID != null || selectedListID === null) {
-            selectedListID = e.target.id
-            saveAndRender()
-            let lists = storageHandler.getLists() || []
-            lists.forEach((list, i) => {
-                if (+list.id === +selectedListID) {
-                    let listToOpen = lists[i]
-                    openList(listToOpen)
-                } else {
-                    return
-                    // console.log('NOPE')
-                }
-                i++
-            })
-
+    // Create task elements
+    static addTasksToView(parent, task) {
+        let taskElement = taskListUL
+        let isComplete
+        const dateCreated = new Date(+task.id).toDateString()
+        if (task.completed === true) {
+            isComplete = 'checked'
         }
-
-    }
-})
-
-function render() {
-    clearElement(allListsUL)
-    renderLists()
-}
-function renderLists() {
-    listsFromLocalStorage.forEach(list => {
-        const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
-        // console.log(selectedList)
-        if (selectedList == null) {
-            UIHandler.addListToView(list)
-        } else if (list.id == +selectedListID) {
-            UIHandler.updateToActive(list)
-            openList(list)
-        } else {
-            UIHandler.addListToView(list)
-        }
-    });
-}
-function clearElement(element) {
-    element.innerHTML = ''
-}
-function save() {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(listsFromLocalStorage))
-    localStorage.setItem(LOCAL_STORAGE_KEY_IS_SELECTED_ID_KEY, JSON.stringify(selectedListID))
-}
-
-function saveAndRender() {
-    save()
-    render()
-}
-
-function renderTasks(parent, task) {
-    // console.log("Parent: "+parent)
-    let parentToSend = JSON.stringify(parent)
-    let taskElement = taskListUL
-    let isComplete
-    const dateCreated = new Date(+task.id).toDateString()
-    if (task.completed === true) {
-        isComplete = 'checked'
-    }
-    taskElement.innerHTML = `
+        taskElement.innerHTML = `
         <li id="${task.id}" class="list-group-item list-group-item-action d-flex justify-content-between">
             <span>
                 <input class="form-check-input me-1" type="checkbox" value="" id="${task.id + 'task'}" ${isComplete}>
@@ -270,29 +153,158 @@ function renderTasks(parent, task) {
             </div>
         </li>
     ` + taskElement.innerHTML
+    }
 }
 
-function closeList() {
-    clearElement(taskListUL)
-    let header = listViewHeader
-    header.innerHTML = `
+// Class to hold the functions triggered by event listeners
+class eventListenerFunc {
+    // Add list event
+    static addListEvent(e) {
+        e.preventDefault()
+        const listName = addListInput.value
+        if (listName == null || listName == '') {
+            return
+        } else {
+            const newList = buildObjects.createList(listName)
+            addListInput.value = null
+            listsFromLocalStorage.push(newList)
+            selectedListID = newList.id
+            renderFunc.saveAndRender()
+        }
+    }
+    // Add task event
+    static addTaskEvent(e) {
+        e.preventDefault()
+        console.log('Here')
+        const taskName = addTaskInput.value
+        if (taskName == null || taskName == '') {
+            return
+        } else {
+            const newTask = buildObjects.createTask(taskName)
+            let currentListID = selectedListID
+            if (currentListID === null) return
+            let lists = storageHandler.getLists()
+            lists.forEach((list, i) => {
+                if (+list.id == +currentListID) {
+                    let taskList = lists.tasks || []
+
+                    taskList.push(newTask)
+                    listsFromLocalStorage[i].tasks.push(newTask)
+                    list.tasks.push(listsFromLocalStorage)
+                    storageHandler.save()
+                    UIHandler.addTasksToView(list, newTask)
+                } else {
+                    return
+                }
+                i++
+                addTaskInput.value = null
+            });
+        }
+    }
+    // Select list event
+    static selectListEvent(e) {
+        if (e.target.tagName.toLowerCase() === 'li') {
+            if (e.target.id === selectedListID) {
+                selectedListID = null
+                renderFunc.saveAndRender()
+                toggleListFunc.closeList()
+            } else if (selectedListID != null || selectedListID === null) {
+                selectedListID = e.target.id
+                renderFunc.saveAndRender()
+                let lists = storageHandler.getLists() || []
+                lists.forEach((list, i) => {
+                    if (+list.id === +selectedListID) {
+                        let listToOpen = lists[i]
+                        toggleListFunc.openList(listToOpen)
+                    } else {
+                        return
+                    }
+                    i++
+                })
+
+            }
+
+        }
+    }
+}
+
+// Class to handle rendering
+class renderFunc {
+    static render() {
+        renderFunc.clearElement(allListsUL)
+        renderFunc.renderLists()
+    }
+    static renderLists() {
+        listsFromLocalStorage.forEach(list => {
+            const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
+            if (selectedList == null) {
+                UIHandler.addListToView(list)
+            } else if (list.id == +selectedListID) {
+                UIHandler.updateToActive(list)
+                toggleListFunc.openList(list)
+            } else {
+                UIHandler.addListToView(list)
+            }
+        });
+    }
+    static clearElement(element) {
+        element.innerHTML = ''
+    }
+
+
+    static saveAndRender() {
+        storageHandler.save()
+        renderFunc.render()
+    }
+
+
+}
+
+// Class to handle opening and closing the lists
+class toggleListFunc {
+    static closeList() {
+        renderFunc.clearElement(taskListUL)
+        let header = listViewHeader
+        header.innerHTML = `
     <h1>Open a List</h1>
     <p></p>
     `
-}
-function openList(list) {
-    let listTasks = list.tasks || []
-    let header = listViewHeader
-    closeList()
-    console.log(list)
-    const dateCreated = new Date(+list.id)
-    header.innerHTML = `
+    }
+    static openList(list) {
+        let listTasks = list.tasks || []
+        let header = listViewHeader
+        toggleListFunc.closeList()
+        console.log(list)
+        const dateCreated = new Date(+list.id)
+        header.innerHTML = `
     <h1>${list.name}</h1>
     <p>Created: ${dateCreated}</p>
     `
-    listTasks.forEach(task => {
-        renderTasks(list, task)
-    });
+        listTasks.forEach(task => {
+            UIHandler.addTasksToView(list, task)
+        });
+        if (window.innerWidth <= 750) {
+            console.log('Small')
+        } else {
+            console.log('Big')
+        }
+    }
 }
 
-document.addEventListener('DOMContentLoaded', renderLists())
+// ======================================================
+// Event listeners
+// ======================================================
+
+addListForm.addEventListener('submit', e => {
+    eventListenerFunc.addListEvent(e)
+})
+
+addTaskForm.addEventListener('submit', e => {
+    eventListenerFunc.addTaskEvent(e)
+})
+
+allListsUL.addEventListener('click', e => {
+    eventListenerFunc.selectListEvent(e)
+})
+
+document.addEventListener('DOMContentLoaded', renderFunc.renderLists())
