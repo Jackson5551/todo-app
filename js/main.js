@@ -96,17 +96,12 @@ class UIHandler {
     static addListToView(list) {
         const view = allListsUL;
         let listToAdd = `
-        <li id="${list.id}" class="listCard-1">
-            <div class="">
-                <div class="">${list.name}</div>
-                    This is a test card
+        <li id="${list.id}" class="list-card-1">
+            <div class="list-card-text" id="${list.id}">
+                <div class="list-card-title" id="${list.id}">${list.name}</div>
             </div>
             <span class="">
-
-                <div class="" role="group" aria-label="Vertical button group">
-                    <button type="button" class="btn btn-danger" id="deleteListButton" onclick="storageHandler.removeList(${list.id})"><i class="bi bi-trash-fill" id="deleteListButton"></i></button>
-                    <button type="button" class="btn btn-secondary"><i class="bi bi-pencil-fill"></i></button>
-                </div>
+                <i class="bi bi-three-dots-vertical"></i>
             </span>
         </li>
         `
@@ -116,15 +111,16 @@ class UIHandler {
     static updateToActive(list) {
         const view = allListsUL;
         let listToAdd = `
-        <li id="${list.id}" class="listCard-1">
-            <div class="">
-                <div class="">${list.name}</div>
-                    This is a test card
+        <li id="${list.id}" class="list-card-1 active">
+            <div class="list-card-text" id="${list.id}">
+                <div class="list-card-title" id="${list.id}">${list.name}</div>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora illo quae consequuntur explicabo, iure omnis
+t                   emporibus laborum aperiam commodi.
             </div>
             <span class="">
-                <div class="" aria-label="Vertical button group">
+                <div class="">
                     <button type="button" class="btn btn-danger" id="deleteListButton" onclick="storageHandler.removeList(${list.id})"><i class="bi bi-trash-fill" id="deleteListButton"></i></button>
-                    <button type="button" class="btn btn-secondary"><i class="bi bi-pencil-fill"></i></button>
+                    <button type="button" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></button>
                 </div>
             </span>
         </li>
@@ -140,13 +136,15 @@ class UIHandler {
             isComplete = 'checked'
         }
         taskElement.innerHTML = `
-        <li id="${task.id}" class="">
+        <li id="${task.id}" class="task-card-1">
             <span>
                 <input class="" type="checkbox" value="" id="${task.id + 'task'}" ${isComplete}>
                 <label class="" for="${task.id + 'task'}">${task.name}</label> [<em>${dateCreated}</em>]
             </span>
-            <div class="" role="group" aria-label="Basic mixed styles example">
-                <button type="button" class="btn btn-secondary"><i
+            <div class="">
+                <button type="button" class="btn btn-dark"><i class="bi bi-arrow-up-circle-fill"></i></button>
+                <button type="button" class="btn btn-dark"><i class="bi bi-arrow-down-circle-fill"></i></button>
+                <button type="button" class="btn btn-warning"><i
                     class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn btn-danger" onClick="storageHandler.removeTask(${task.id})"><i
                     class="bi bi-trash-fill"></i></button>
@@ -203,7 +201,7 @@ class eventListenerFunc {
     }
     // Select list event
     static selectListEvent(e) {
-        if (e.target.tagName.toLowerCase() === 'li') {
+        if (e.target.tagName.toLowerCase() !== 'span') {
             if (e.target.id === selectedListID) {
                 selectedListID = null
                 renderFunc.saveAndRender()

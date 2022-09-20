@@ -2,6 +2,8 @@ body {
   font-family: sans-serif;
   margin: 0;
   padding: 0;
+  background-position: center;
+  background-size: cover;
 }
 
 .wrapper {
@@ -9,41 +11,108 @@ body {
   width: 100%;
 }
 
+#listViewHeader {
+  color: #fdfffc;
+}
+
 .allLists {
   list-style-type: none;
   list-style-position: inside;
   margin: 0;
   padding: 0;
+  width: 90%;
+  overflow-y: scroll;
 }
-.allLists .listCard-1 {
-  width: 100%;
-  background-color: white;
+.allLists .list-card-1 {
+  max-width: calc(100% - 30px);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 10px;
-  border: 1px solid #323031;
-  margin-top: 2px;
+  background-color: #373F51;
+  color: #fdfffc;
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  margin: 10px;
   cursor: pointer;
+}
+.allLists .list-card-1 .list-card-content {
+  padding: 10px;
+  margin: 10px;
+}
+.allLists .list-card-1 .list-card-title {
+  font-weight: 600;
+}
+.allLists .list-card-1:hover {
+  background-color: #323031;
+}
+.allLists .active {
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+.taskList {
+  list-style-type: none;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 0.5px solid #535E79;
+}
+.taskList .task-card-1 {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #373F51;
+  color: #fdfffc;
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  margin: 10px;
+}
+
+.nav {
+  position: fixed;
+  background-color: #323031;
+  color: #fdfffc;
+  width: 100%;
+}
+.nav div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  height: 5vh;
 }
 
 #listView {
+  top: calc(5vh + 10px);
+  height: calc(100vh - (5vh + 10px));
   width: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin: 0;
-  padding: 0;
-  background-color: white;
+  background-color: #373F51;
+  position: fixed;
+  overflow-x: hidden;
 }
-
-#viewToDOList {
+#viewToDoList {
   width: 80%;
   display: flex;
-  margin: 0;
-  padding: 0;
-  align-items: flex-start;
+  left: 20%;
+  height: calc(100vh - (5vh + 10px));
+  top: calc(5vh + 10px);
+  align-items: center;
   justify-content: flex-start;
+  flex-direction: column;
+  text-align: center;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #373F51;
+  border-left: 0.5px solid #535E79;
 }
 
 .input-group {
@@ -52,42 +121,71 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
 
 input[type=text] {
-  border: 1px solid #323031;
+  border: 0;
   padding: 10px;
-  border-radius: 5px;
+  max-width: 100%;
+  min-width: 30%;
+  background-color: #535E79;
+  color: #fdfffc;
 }
 
-.btn, .btn-secondary, .btn-danger, .btn-primary {
+input[type=text]:focus {
+  outline: none;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #2ec4b6;
+}
+
+input[type=text]::placeholder {
+  color: #fdfffc;
+  opacity: 0.5;
+}
+
+.btn, .btn-dark, .btn-success, .btn-warning, .btn-secondary, .btn-danger, .btn-primary {
   padding: 10px;
-  border-radius: 5px;
   border-style: none;
   cursor: pointer;
 }
 
-.btn:active, .btn-secondary:active, .btn-danger:active, .btn-primary:active {
+.btn:active, .btn-dark:active, .btn-success:active, .btn-warning:active, .btn-secondary:active, .btn-danger:active, .btn-primary:active {
   background-color: #323031;
-  color: white;
+  color: #fdfffc;
 }
 
 .btn-primary {
-  background-color: #084c61;
-  color: white;
+  background-color: #2ec4b6;
+  color: #fdfffc;
 }
 
 .btn-danger {
-  background-color: #db3a34;
-  color: white;
+  background-color: #e71d36;
+  color: #fdfffc;
 }
 
 .btn-secondary {
-  background-color: #ffc857;
-  color: white;
+  background-color: #535E79;
+  color: #fdfffc;
 }
 
-@media (max-width: 750px) {
+.btn-warning {
+  background-color: #ff9f1c;
+  color: #fdfffc;
+}
+
+.btn-success {
+  background-color: #44af69;
+  color: #fdfffc;
+}
+
+.btn-dark {
+  background-color: #323031;
+  color: #fdfffc;
+}
+
+@media (max-width: 900px) {
   #viewToDoList {
     display: none;
   }

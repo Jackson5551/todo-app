@@ -1,100 +1,255 @@
 @use '_var.scss';
 
-body{
+body {
     font-family: sans-serif;
     margin: 0;
     padding: 0;
+    // background-image: url(../img/192136.jpg);
+    background-position: center;
+    background-size: cover;
 }
 
-.wrapper{
+.container {
+    // top: calc(5vh + 10px);
+    // margin: 5px;
+
+}
+
+.wrapper {
     display: flex;
     width: 100%;
+    // margin: 5px;
 }
-.allLists{
+
+#listViewHeader {
+    color: var.$primary-white;
+}
+
+.allLists {
     list-style-type: none;
     list-style-position: inside;
     margin: 0;
     padding: 0;
-    .listCard-1{
-        width: 100%;
-        background-color: var.$primary-white;
+    width: 90%;
+    overflow-y: scroll;
+
+    .list-card-1 {
+        max-width: calc(100% - 30px);
+        // overflow:auto;
+        // background-color: var.$primary-white;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         padding: 10px;
-        border: 1px solid var.$jet;
-        margin-top: 2px;
+        // border: 1px solid var.$jet;
+        background-color: var.$charcoal;
+        color: var.$primary-white;
+        // box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+        box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        margin: 10px;
         cursor: pointer;
+
+        .list-card-content {
+            padding: 10px;
+
+            margin: 10px;
+        }
+
+        .list-card-title {
+            font-weight: 600;
+        }
+
+    }
+
+    .list-card-1:hover {
+        background-color: var.$jet;
+    }
+
+    .active {
+        // background-color: var.$blue-munsell;
+        // background-color: var.$granite-gray;
+        // color: var.$primary-white;
+        box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
     }
 }
 
-#listView{
+.taskList {
+    list-style-type: none;
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 0.5px solid var.$granite-gray;
+
+    .task-card-1 {
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        // flex-direction: row;
+        padding: 10px;
+        background-color: var.$charcoal;
+        color: var.$primary-white;
+        // box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+        box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        margin: 10px;
+    }
+}
+
+.nav {
+    position: fixed;
+    background-color: var.$jet;
+    color: var.$primary-white;
+    width: 100%;
+
+    div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 5px;
+        height: 5vh;
+    }
+}
+
+#listView {
+    top: calc(5vh + 10px);
+    height: calc((100vh) - (5vh + 10px));
     width: 20%;
+    // z-index: -1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    margin: 0;
-    padding: 0;
-    background-color: var.$primary-white;
+    // margin: 0;
+    // padding: 0;
+    background-color: var.$charcoal;
+    position: fixed;
+    // overflow-y: scroll;
+    overflow-x: hidden;
+
+    .sticky {
+        // position: sticky;
+    }
+
+    .allLists {
+        // overflow-y: scroll;
+        // position: fixed;
+
+    }
 }
 
-#viewToDOList{
+#viewToDoList {
     width: 80%;
     display: flex;
-    margin: 0;
-    padding: 0;
-    align-items: flex-start;
-    justify-content:flex-start;
+    // margin: 10px;
+    // padding: 10px;
+    left: 20%;
+    height: calc(100vh - (5vh + 10px));
+    // right: 30%;
+    top: calc(5vh + 10px);
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    text-align: center;
+    position: fixed;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: var.$charcoal;
+    border-left: 0.5px solid var.$granite-gray;
 }
 
-.input-group{
+.input-group {
     padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+    // position: fixed;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
 
-input[type="text"]{
-    border: 1px solid var.$jet;
+input[type="text"] {
+    border: 0;
     padding: 10px;
-    border-radius: 5px;
+    max-width: 100%;
+    min-width: 30%;
+    // border-radius: 5px;
+    // box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    background-color: var.$granite-gray;
+    color: var.$primary-white;
+    
 }
-.btn{
+
+input[type="text"]:focus {
+    outline: none;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var.$tiffany-blue;
+}
+input[type="text"]::placeholder{
+    color: var.$primary-white;
+    opacity: 0.5;
+}
+
+input[type="checkbox"] {}
+
+.btn {
     padding: 10px;
-    border-radius: 5px;
+    // margin: 5px;
+    // border-radius: 5px;
     border-style: none;
     cursor: pointer;
 }
-.btn:active{
+
+.btn:active {
     background-color: var.$jet;
     color: var.$primary-white;
 }
-.btn-primary{
+
+.btn-primary {
     @extend .btn;
-    background-color: var.$midnight-green-eagle-green;
-    color: var.$primary-white;
-}
-.btn-primary:hover{
-    // background-color: var.$primary-white;
-    // color: var.$midnight-green-eagle-green;
-}
-.btn-danger{
-    @extend .btn;
-    background-color: var.$permanent-geranium-lake;
-    color: var.$primary-white;
-}
-.btn-secondary{
-    @extend .btn;
-    background-color: var.$maximum-yellow-red;
+    background-color: var.$tiffany-blue;
     color: var.$primary-white;
 }
 
-@media (max-width: 750px){
-    #viewToDoList{
+.btn-danger {
+    @extend .btn;
+    background-color: var.$rose-madder;
+    color: var.$primary-white;
+}
+
+.btn-secondary {
+    @extend .btn;
+    background-color: var.$granite-gray;
+    color: var.$primary-white;
+}
+
+.btn-warning {
+    @extend .btn;
+    background-color: var.$orange-peel;
+    color: var.$primary-white;
+}
+
+.btn-success {
+    @extend .btn;
+    background-color: var.$medium-sea-green;
+    color: var.$primary-white;
+}
+
+.btn-dark {
+    @extend .btn;
+    background-color: var.$jet;
+    color: var.$primary-white;
+}
+
+@media (max-width: 900px) {
+    #viewToDoList {
         display: none;
     }
-    #listView{
+
+    #listView {
         width: 100%;
     }
 }
