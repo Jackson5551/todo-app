@@ -4,6 +4,22 @@ body {
   padding: 0;
   background-position: center;
   background-size: cover;
+  overflow-y: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
 }
 
 .wrapper {
@@ -20,18 +36,22 @@ body {
   list-style-position: inside;
   margin: 0;
   padding: 0;
-  width: 90%;
-  overflow-y: scroll;
+  width: 95%;
+  overflow-y: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding: 10px;
 }
 .allLists .list-card-1 {
   max-width: calc(100% - 30px);
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   background-color: #373F51;
   color: #fdfffc;
   box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
-  margin: 10px;
   cursor: pointer;
 }
 .allLists .list-card-1 .list-card-content {
@@ -45,7 +65,9 @@ body {
   background-color: #323031;
 }
 .allLists .active {
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  background-color: #323031;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .taskList {
@@ -54,17 +76,19 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: none;
   overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top: 0.5px solid #535E79;
 }
 .taskList .task-card-1 {
   width: 80%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 10px;
   background-color: #373F51;
   color: #fdfffc;
@@ -97,6 +121,8 @@ body {
   background-color: #373F51;
   position: fixed;
   overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 #viewToDoList {
   width: 80%;
@@ -111,8 +137,10 @@ body {
   position: fixed;
   overflow-y: scroll;
   overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   background-color: #373F51;
-  border-left: 0.5px solid #535E79;
+  border-left: 1px solid #535E79;
 }
 
 .input-group {
@@ -121,7 +149,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  border-bottom: 1px solid #535E79;
 }
 
 input[type=text] {
@@ -144,13 +172,13 @@ input[type=text]::placeholder {
   opacity: 0.5;
 }
 
-.btn, .btn-dark, .btn-success, .btn-warning, .btn-secondary, .btn-danger, .btn-primary {
+.btn, .btn-transparent, .btn-dark, .btn-success, .btn-warning, .btn-secondary, .btn-danger, .btn-primary {
   padding: 10px;
   border-style: none;
   cursor: pointer;
 }
 
-.btn:active, .btn-dark:active, .btn-success:active, .btn-warning:active, .btn-secondary:active, .btn-danger:active, .btn-primary:active {
+.btn:active, .btn-transparent:active, .btn-dark:active, .btn-success:active, .btn-warning:active, .btn-secondary:active, .btn-danger:active, .btn-primary:active {
   background-color: #323031;
   color: #fdfffc;
 }
@@ -185,9 +213,17 @@ input[type=text]::placeholder {
   color: #fdfffc;
 }
 
+.btn-transparent {
+  background-color: transparent;
+  color: #fdfffc;
+}
+
 @media (max-width: 900px) {
   #viewToDoList {
-    display: none;
+    width: 100%;
+    visibility: hidden;
+    left: 0;
+    right: 0;
   }
   #listView {
     width: 100%;

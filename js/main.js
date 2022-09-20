@@ -2,6 +2,7 @@
 // Variables
 // ======================================================
 const addListInput = document.querySelector('#addListInput')
+const listView = document.querySelector('#listView')
 const allListsUL = document.querySelector('#allLists')
 const taskListUL = document.querySelector('#taskList')
 const viewToDoListDiv = document.querySelector('#viewToDoList')
@@ -99,9 +100,10 @@ class UIHandler {
         <li id="${list.id}" class="list-card-1">
             <div class="list-card-text" id="${list.id}">
                 <div class="list-card-title" id="${list.id}">${list.name}</div>
+                <em id="${list.id}">${list.tasks.length} Tasks</em>
             </div>
             <span class="">
-                <i class="bi bi-three-dots-vertical"></i>
+                <i class="bi bi-grip-vertical"></i>
             </span>
         </li>
         `
@@ -110,17 +112,16 @@ class UIHandler {
     // Update list card element to active
     static updateToActive(list) {
         const view = allListsUL;
+        const dateCreated = new Date(+list.id).toDateString()
         let listToAdd = `
         <li id="${list.id}" class="list-card-1 active">
             <div class="list-card-text" id="${list.id}">
                 <div class="list-card-title" id="${list.id}">${list.name}</div>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora illo quae consequuntur explicabo, iure omnis
-t                   emporibus laborum aperiam commodi.
+                <em id="${list.id}">${list.tasks.length} Tasks</em>
             </div>
             <span class="">
                 <div class="">
                     <button type="button" class="btn btn-danger" id="deleteListButton" onclick="storageHandler.removeList(${list.id})"><i class="bi bi-trash-fill" id="deleteListButton"></i></button>
-                    <button type="button" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></button>
                 </div>
             </span>
         </li>
@@ -139,18 +140,35 @@ t                   emporibus laborum aperiam commodi.
         <li id="${task.id}" class="task-card-1">
             <span>
                 <input class="" type="checkbox" value="" id="${task.id + 'task'}" ${isComplete}>
-                <label class="" for="${task.id + 'task'}">${task.name}</label> [<em>${dateCreated}</em>]
             </span>
+            <label class="" for="${task.id + 'task'}">${task.name}</label>
             <div class="">
-                <button type="button" class="btn btn-dark"><i class="bi bi-arrow-up-circle-fill"></i></button>
-                <button type="button" class="btn btn-dark"><i class="bi bi-arrow-down-circle-fill"></i></button>
                 <button type="button" class="btn btn-warning"><i
                     class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn btn-danger" onClick="storageHandler.removeTask(${task.id})"><i
                     class="bi bi-trash-fill"></i></button>
+                    
+                <i class="bi bi-grip-vertical"></i>
             </div>
         </li>
     ` + taskElement.innerHTML
+    }
+    static checkScreenSize(size) {
+        if (window.innerWidth < size) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    static adjustScreen() {
+        if (this.checkScreenSize(900)) {
+            listView.style.visibility = 'visible';
+            viewToDoListDiv.style.visibility = 'hidden';
+        } else {
+            listView.style.visibility = 'visible';
+            viewToDoListDiv.style.visibility = 'visible';
+        }
     }
 }
 
@@ -189,8 +207,9 @@ class eventListenerFunc {
                     taskList.push(newTask)
                     listsFromLocalStorage[i].tasks.push(newTask)
                     list.tasks.push(listsFromLocalStorage)
-                    storageHandler.save()
-                    UIHandler.addTasksToView(list, newTask)
+                    renderFunc.clearElement(allListsUL)
+                    renderFunc.saveAndRender()
+                    // UIHandler.addTasksToView(list, newTask)
                 } else {
                     return
                 }
@@ -201,27 +220,52 @@ class eventListenerFunc {
     }
     // Select list event
     static selectListEvent(e) {
-        if (e.target.tagName.toLowerCase() !== 'span') {
-            if (e.target.id === selectedListID) {
-                selectedListID = null
-                renderFunc.saveAndRender()
-                toggleListFunc.closeList()
-            } else if (selectedListID != null || selectedListID === null) {
-                selectedListID = e.target.id
-                renderFunc.saveAndRender()
-                let lists = storageHandler.getLists() || []
-                lists.forEach((list, i) => {
-                    if (+list.id === +selectedListID) {
-                        let listToOpen = lists[i]
-                        toggleListFunc.openList(listToOpen)
-                    } else {
-                        return
-                    }
-                    i++
-                })
-
+        if (!UIHandler.checkScreenSize(900)) {
+            console.log('Big')
+            if (e.target.tagName.toLowerCase() !== 'span') {
+                if (e.target.id === selectedListID) {
+                    selectedListID = null
+                    renderFunc.saveAndRender()
+                    toggleListFunc.closeList()
+                } else if (selectedListID != null || selectedListID === null) {
+                    selectedListID = e.target.id
+                    renderFunc.saveAndRender()
+                    let lists = storageHandler.getLists() || []
+                    lists.forEach((list, i) => {
+                        if (+list.id === +selectedListID) {
+                            let listToOpen = lists[i]
+                            toggleListFunc.openList(listToOpen)
+                        } else {
+                            return
+                        }
+                        i++
+                    })
+                }
             }
-
+        } else {
+            console.log('Small')
+            if (e.target.tagName.toLowerCase() !== 'span') {
+                if (e.target.id === selectedListID) {
+                    selectedListID = null
+                    renderFunc.saveAndRender()
+                    toggleListFunc.closeList()
+                } else if (selectedListID != null || selectedListID === null) {
+                    selectedListID = e.target.id
+                    renderFunc.saveAndRender()
+                    let lists = storageHandler.getLists() || []
+                    lists.forEach((list, i) => {
+                        if (+list.id === +selectedListID) {
+                            let listToOpen = lists[i]
+                            toggleListFunc.openList(listToOpen)
+                            listView.style.visibility = 'hidden'
+                            viewToDoListDiv.style.visibility = 'visible'
+                        } else {
+                            return
+                        }
+                        i++
+                    })
+                }
+            }
         }
     }
 }
@@ -275,7 +319,7 @@ class toggleListFunc {
         console.log(list)
         const dateCreated = new Date(+list.id)
         header.innerHTML = `
-    <h1>${list.name}</h1>
+    <span><h1>${list.name} <button type="button" class="btn btn-transparent" id="${list.id}"><i class="bi bi-pencil-fill"></i></button></h1></span>
     <p>Created: ${dateCreated}</p>
     `
         listTasks.forEach(task => {
