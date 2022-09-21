@@ -14,7 +14,7 @@ body {
 
 h1 {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -46,14 +46,18 @@ h1 {
     list-style-position: inside;
     margin: 0;
     padding: 0;
-    width: 95%;
+    width: 90%;
+    height: 100%;
     overflow-y: none;
+    overflow-x: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
     padding: 10px;
+    // box-sizing:border-box;
 
     .list-card-1 {
         max-width: calc(100% - 30px);
+        border-radius: 5px;
         // overflow:auto;
         // background-color: var.$primary-white;
         display: flex;
@@ -62,11 +66,12 @@ h1 {
         padding-top: 20px;
         padding-bottom: 20px;
         // border: 1px solid var.$jet;
-        background-color: var.$charcoal;
+        background-color: var.$independence-2;
         color: var.$primary-white;
         // box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
-        box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
-        // margin: 10px;
+        // box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        box-shadow: var.$primary-box-shadow;
+        margin-top: 10px;
         cursor: pointer;
 
         .list-card-content {
@@ -83,14 +88,14 @@ h1 {
     }
 
     .list-card-1:hover {
-        background-color: var.$jet;
+        background-color: var.$gunmetal;
     }
 
     .active {
         // background-color: var.$blue-munsell;
         // background-color: var.$granite-gray;
         // color: var.$primary-white;
-        background-color: var.$jet;
+        background-color: var.$gunmetal;
         padding-top: 30px;
         padding-bottom: 30px;
         // box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
@@ -104,6 +109,7 @@ h1 {
     margin: 0;
     padding: 0;
     width: 100%;
+    height: 100%;
     overflow-y: none;
     overflow-x: hidden;
     -ms-overflow-style: none;
@@ -114,17 +120,29 @@ h1 {
     // border-top: 0.5px solid var.$granite-gray;
 
     .task-card-1 {
+        border-radius: 5px;
         width: 80%;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
         align-items: center;
         // flex-direction: row;
         padding: 10px;
-        background-color: var.$charcoal;
+        background-color: var.$independence-2;
         color: var.$primary-white;
         // box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
-        box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        // box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        box-shadow: var.$primary-box-shadow;
         margin: 10px;
+
+        .taskButtons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .task-card-1:hover {
+        background-color: var.$gunmetal;
     }
 }
 
@@ -157,9 +175,10 @@ h1 {
     background-color: var.$charcoal;
     position: fixed;
     // overflow-y: scroll;
-    overflow-x: hidden;
+    // overflow-x: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    // box-sizing: border-box;
 
     .sticky {
         // position: sticky;
@@ -186,20 +205,23 @@ h1 {
     flex-direction: column;
     text-align: center;
     position: fixed;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    // overflow-y:scroll;
+    // overflow-x: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
     background-color: var.$charcoal;
     border-left: 1px solid var.$granite-gray;
+    // box-sizing: content-box;
 }
 
 .input-group {
+    // border-radius: 5px;
     padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+    box-sizing: border-box;
     // position: fixed;
     // box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
     border-bottom: 1px solid var.$granite-gray;
@@ -215,37 +237,55 @@ input[type="text"] {
     background-color: var.$granite-gray;
     color: var.$primary-white;
 
+    &:focus {
+        outline: none;
+        background-color: var.$baby-powder;
+        color: var.$granite-gray;
+    }
+
+    &::placeholder {
+        color: var.$primary-white;
+        opacity: 0.5;
+    }
+
+    &:focus::placeholder {
+        color: var.$granite-gray;
+        opacity: 0.5;
+    }
 }
 
-input[type="text"]:focus {
-    outline: none;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var.$tiffany-blue;
+input[type="checkbox"] {
+    appearance: none;
+    border-radius: 5px;
+    width: 1.5em;
+    height: 1.5em;
+    position: absolute;
+    background-color: transparent;
+
+    &:checked {
+        &+label {
+            text-decoration: line-through;
+            opacity: 0.7;
+            font-weight: 600;
+        }
+    }
+
+    &::after {
+        content: '';
+        position: relative;
+        top: 0;
+        left: 0;
+    }
 }
 
-input[type="text"]::placeholder {
-    color: var.$primary-white;
-    opacity: 0.5;
+.checkLabel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
 }
-
-// input[type="checkbox"] {
-//     appearance: none;
-//     background-color: var.$rose-madder;
-//     margin: 0;
-//     height: 2em;
-//     width: 2em;
-//     color: var.$jet;
-//     border: 5px solid var.$primary-white;
-//     border-radius: 50px;
-//     cursor: pointer;
-//     // transform: translateY(-0.075em);
-//     // display: grid;
-//     // place-content: center;
-// }
-// input[type="checkbox"]:checked{
-//     background-color: var.$medium-sea-green;
-//     border: 5px solid var.$primary-white;
-// }
 
 .btn {
     padding: 10px;
@@ -253,11 +293,12 @@ input[type="text"]::placeholder {
     // border-radius: 5px;
     border-style: none;
     cursor: pointer;
-}
 
-.btn:active {
-    background-color: var.$jet;
-    color: var.$primary-white;
+    &:hover:active {
+        background-color: var.$jet;
+        color: var.$primary-white;
+        border: none;
+    }
 }
 
 .btn-primary {
@@ -268,8 +309,14 @@ input[type="text"]::placeholder {
 
 .btn-danger {
     @extend .btn;
-    background-color: var.$rose-madder;
-    color: var.$primary-white;
+    border-radius: 5px;
+    background-color: transparent;
+    color: var.$rose-madder;
+
+    &:hover {
+        background-color: var.$rose-madder;
+        color: var.$primary-white
+    }
 }
 
 .btn-secondary {
@@ -280,8 +327,14 @@ input[type="text"]::placeholder {
 
 .btn-warning {
     @extend .btn;
-    background-color: var.$orange-peel;
-    color: var.$primary-white;
+    border-radius: 5px;
+    background-color: transparent;
+    color: var.$orange-peel;
+
+    &:hover {
+        background-color: var.$orange-peel;
+        color: var.$primary-white;
+    }
 }
 
 .btn-success {
@@ -302,10 +355,20 @@ input[type="text"]::placeholder {
     color: var.$primary-white;
 }
 
+.btn-input-br {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.text-input-br {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
 @media (max-width: 900px) {
     #viewToDoList {
         width: 100%;
-        visibility: hidden;
+        // visibility: hidden;
         left: 0;
         right: 0;
     }
@@ -313,5 +376,6 @@ input[type="text"]::placeholder {
     #listView {
         width: 100%;
         // left:0;
+        // visibility: visible;
     }
 }

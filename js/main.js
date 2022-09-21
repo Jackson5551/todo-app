@@ -10,11 +10,13 @@ const addListForm = document.querySelector('#addListForm')
 const listViewHeader = document.querySelector('#listViewHeader')
 const addTaskForm = document.querySelector('#addTaskForm')
 const addTaskInput = document.querySelector('#addTaskInput')
+const closeListButton = document.querySelector('#closeButton')
+const taskCard = document.querySelector('.task-card-1')
 
 const LOCAL_STORAGE_KEY = 'todoApp.listKey'
 const LOCAL_STORAGE_KEY_IS_SELECTED_ID_KEY = 'todoApp.isSelected'
 let listsFromLocalStorage = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || []
-let selectedListID = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_IS_SELECTED_ID_KEY)) || []
+let selectedListID = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_IS_SELECTED_ID_KEY))
 
 // ======================================================
 // Classes
@@ -84,6 +86,20 @@ class storageHandler {
             i++
         });
     }
+    static updateCheckStatus(taskID) {
+        const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
+        selectedList.tasks.forEach((task, i) => {
+            if (+task.id == + taskID) {
+                if (task.completed === false) {
+                    task.completed = true;
+                    renderFunc.saveAndRender()
+                } else {
+                    task.completed = false
+                    renderFunc.saveAndRender()
+                }
+            } else { return }
+        })
+    }
     // Saves everything to local storage
     static save() {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(listsFromLocalStorage))
@@ -135,14 +151,14 @@ class UIHandler {
         const dateCreated = new Date(+task.id).toDateString()
         if (task.completed === true) {
             isComplete = 'checked'
+        } else {
+            isComplete = ''
         }
         taskElement.innerHTML = `
         <li id="${task.id}" class="task-card-1">
-            <span>
-                <input class="" type="checkbox" value="" id="${task.id + 'task'}" ${isComplete}>
-            </span>
-            <label class="" for="${task.id + 'task'}">${task.name}</label>
-            <div class="">
+            <input class="" type="checkbox" value="" id="${task.id + 'task'}" ${isComplete}>
+            <label class="checkLabel" for="${task.id + 'task'}" onclick="storageHandler.updateCheckStatus(${task.id})">${task.name}</label>
+            <div class="taskButtons">
                 <button type="button" class="btn btn-warning"><i
                     class="bi bi-pencil-fill"></i></button>
                 <button type="button" class="btn btn-danger" onClick="storageHandler.removeTask(${task.id})"><i
@@ -161,15 +177,15 @@ class UIHandler {
             return false
         }
     }
-    static adjustScreen() {
-        if (this.checkScreenSize(900)) {
-            listView.style.visibility = 'visible';
-            viewToDoListDiv.style.visibility = 'hidden';
-        } else {
-            listView.style.visibility = 'visible';
-            viewToDoListDiv.style.visibility = 'visible';
-        }
-    }
+    // static adjustScreen() {
+    //     if (this.checkScreenSize(900)) {
+    //         listView.style.visibility = 'visible';
+    //         viewToDoListDiv.style.visibility = 'hidden';
+    //     } else {
+    //         listView.style.visibility = 'visible';
+    //         viewToDoListDiv.style.visibility = 'visible';
+    //     }
+    // }
 }
 
 // Class to hold the functions triggered by event listeners
@@ -220,7 +236,7 @@ class eventListenerFunc {
     }
     // Select list event
     static selectListEvent(e) {
-        if (!UIHandler.checkScreenSize(900)) {
+        if (window.innerWidth >= 900) {
             console.log('Big')
             if (e.target.tagName.toLowerCase() !== 'span') {
                 if (e.target.id === selectedListID) {
@@ -235,6 +251,8 @@ class eventListenerFunc {
                         if (+list.id === +selectedListID) {
                             let listToOpen = lists[i]
                             toggleListFunc.openList(listToOpen)
+                            listView.style.visibility = 'visible'
+                            viewToDoListDiv.style.visibility = 'visible'
                         } else {
                             return
                         }
@@ -257,8 +275,9 @@ class eventListenerFunc {
                         if (+list.id === +selectedListID) {
                             let listToOpen = lists[i]
                             toggleListFunc.openList(listToOpen)
-                            listView.style.visibility = 'hidden'
-                            viewToDoListDiv.style.visibility = 'visible'
+                            // listView.style.visibility = 'hidden'
+                            // viewToDoListDiv.style.visibility = 'visible'
+                            renderFunc.screenSizeAdjustment()
                         } else {
                             return
                         }
@@ -273,10 +292,12 @@ class eventListenerFunc {
 // Class to handle rendering
 class renderFunc {
     static render() {
+        this.screenSizeAdjustment()
         renderFunc.clearElement(allListsUL)
         renderFunc.renderLists()
     }
     static renderLists() {
+
         listsFromLocalStorage.forEach(list => {
             const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
             if (selectedList == null) {
@@ -298,7 +319,25 @@ class renderFunc {
         storageHandler.save()
         renderFunc.render()
     }
-
+    static screenSizeAdjustment() {
+        if (window.innerWidth > 900) {
+            listView.style.visibility = 'visible';
+            viewToDoListDiv.style.visibility = 'visible';
+            // console.log('Width > 900')
+        } else if (window.innerWidth < 900) {
+            // console.log('Width < 900')
+            // console.log(selectedListID)
+            if (selectedListID === null) {
+                // console.log('List ID is Null')
+                listView.style.visibility = 'visible';
+                viewToDoListDiv.style.visibility = 'hidden';
+            } else if (selectedListID !== null) {
+                // console.log('List ID is not Null')
+                listView.style.visibility = 'hidden';
+                viewToDoListDiv.style.visibility = 'visible';
+            }
+        }
+    }
 
 }
 
@@ -307,10 +346,12 @@ class toggleListFunc {
     static closeList() {
         renderFunc.clearElement(taskListUL)
         let header = listViewHeader
+        // selectedListID = null
         header.innerHTML = `
     <h1>Open a List</h1>
     <p></p>
     `
+
     }
     static openList(list) {
         let listTasks = list.tasks || []
@@ -319,7 +360,7 @@ class toggleListFunc {
         console.log(list)
         const dateCreated = new Date(+list.id)
         header.innerHTML = `
-    <span><h1>${list.name} <button type="button" class="btn btn-transparent" id="${list.id}"><i class="bi bi-pencil-fill"></i></button></h1></span>
+    <span><h1><button onclick="" class="btn btn-transparent" id="closeButton"><i class="bi bi-arrow-left-square-fill"></i> Close</button> ${list.name} <button type="button" class="btn btn-transparent" id="${list.id}"><i class="bi bi-pencil-fill"></i> Edit</button></h1></span>
     <p>Created: ${dateCreated}</p>
     `
         listTasks.forEach(task => {
@@ -348,5 +389,16 @@ addTaskForm.addEventListener('submit', e => {
 allListsUL.addEventListener('click', e => {
     eventListenerFunc.selectListEvent(e)
 })
+
+// window.onresize = () => {
+//     renderFunc.screenSizeAdjustment()
+// }
+
+window.addEventListener('resize', renderFunc.screenSizeAdjustment())
+
+window.onresize = () => {
+    console.log('Resize')
+    renderFunc.screenSizeAdjustment()
+}
 
 document.addEventListener('DOMContentLoaded', renderFunc.renderLists())

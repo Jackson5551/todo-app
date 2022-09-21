@@ -11,7 +11,7 @@ body {
 
 h1 {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -36,22 +36,26 @@ h1 {
   list-style-position: inside;
   margin: 0;
   padding: 0;
-  width: 95%;
+  width: 90%;
+  height: 100%;
   overflow-y: none;
+  overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
   padding: 10px;
 }
 .allLists .list-card-1 {
   max-width: calc(100% - 30px);
+  border-radius: 5px;
   display: flex;
   justify-content: space-between;
   padding: 10px;
   padding-top: 20px;
   padding-bottom: 20px;
-  background-color: #373F51;
+  background-color: #414962;
   color: #fdfffc;
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+  margin-top: 10px;
   cursor: pointer;
 }
 .allLists .list-card-1 .list-card-content {
@@ -62,10 +66,10 @@ h1 {
   font-weight: 600;
 }
 .allLists .list-card-1:hover {
-  background-color: #323031;
+  background-color: #292e3d;
 }
 .allLists .active {
-  background-color: #323031;
+  background-color: #292e3d;
   padding-top: 30px;
   padding-bottom: 30px;
 }
@@ -76,6 +80,7 @@ h1 {
   margin: 0;
   padding: 0;
   width: 100%;
+  height: 100%;
   overflow-y: none;
   overflow-x: hidden;
   -ms-overflow-style: none;
@@ -85,15 +90,24 @@ h1 {
   align-items: center;
 }
 .taskList .task-card-1 {
+  border-radius: 5px;
   width: 80%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   padding: 10px;
-  background-color: #373F51;
+  background-color: #414962;
   color: #fdfffc;
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
   margin: 10px;
+}
+.taskList .task-card-1 .taskButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.taskList .task-card-1:hover {
+  background-color: #292e3d;
 }
 
 .nav {
@@ -120,7 +134,6 @@ h1 {
   justify-content: flex-start;
   background-color: #373F51;
   position: fixed;
-  overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -135,8 +148,6 @@ h1 {
   flex-direction: column;
   text-align: center;
   position: fixed;
-  overflow-y: scroll;
-  overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
   background-color: #373F51;
@@ -149,6 +160,7 @@ h1 {
   justify-content: center;
   align-items: center;
   width: 100%;
+  box-sizing: border-box;
   border-bottom: 1px solid #535E79;
 }
 
@@ -160,16 +172,47 @@ input[type=text] {
   background-color: #535E79;
   color: #fdfffc;
 }
-
 input[type=text]:focus {
   outline: none;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #2ec4b6;
+  background-color: #fdfffc;
+  color: #535E79;
 }
-
 input[type=text]::placeholder {
   color: #fdfffc;
   opacity: 0.5;
+}
+input[type=text]:focus::placeholder {
+  color: #535E79;
+  opacity: 0.5;
+}
+
+input[type=checkbox] {
+  appearance: none;
+  border-radius: 5px;
+  width: 1.5em;
+  height: 1.5em;
+  position: absolute;
+  background-color: transparent;
+}
+input[type=checkbox]:checked + label {
+  text-decoration: line-through;
+  opacity: 0.7;
+  font-weight: 600;
+}
+input[type=checkbox]::after {
+  content: "";
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.checkLabel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
 }
 
 .btn, .btn-transparent, .btn-dark, .btn-success, .btn-warning, .btn-secondary, .btn-danger, .btn-primary {
@@ -177,10 +220,10 @@ input[type=text]::placeholder {
   border-style: none;
   cursor: pointer;
 }
-
-.btn:active, .btn-transparent:active, .btn-dark:active, .btn-success:active, .btn-warning:active, .btn-secondary:active, .btn-danger:active, .btn-primary:active {
+.btn:hover:active, .btn-transparent:hover:active, .btn-dark:hover:active, .btn-success:hover:active, .btn-warning:hover:active, .btn-secondary:hover:active, .btn-danger:hover:active, .btn-primary:hover:active {
   background-color: #323031;
   color: #fdfffc;
+  border: none;
 }
 
 .btn-primary {
@@ -189,6 +232,11 @@ input[type=text]::placeholder {
 }
 
 .btn-danger {
+  border-radius: 5px;
+  background-color: transparent;
+  color: #e71d36;
+}
+.btn-danger:hover {
   background-color: #e71d36;
   color: #fdfffc;
 }
@@ -199,6 +247,11 @@ input[type=text]::placeholder {
 }
 
 .btn-warning {
+  border-radius: 5px;
+  background-color: transparent;
+  color: #ff9f1c;
+}
+.btn-warning:hover {
   background-color: #ff9f1c;
   color: #fdfffc;
 }
@@ -218,10 +271,19 @@ input[type=text]::placeholder {
   color: #fdfffc;
 }
 
+.btn-input-br {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.text-input-br {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
 @media (max-width: 900px) {
   #viewToDoList {
     width: 100%;
-    visibility: hidden;
     left: 0;
     right: 0;
   }
