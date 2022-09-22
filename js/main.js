@@ -130,12 +130,12 @@ class UIHandler {
         // listCard.id = `${list.id}`
         if(+list.id === +selectedListID){
             listCard.classList.add('list-card-1','active')
-            drag.style.visibility = 'hidden'
+            // drag.style.visibility = 'hidden'
             deleteButton.style.visibility = 'visible'
             toggleListFunc.openList(list)
         } else {
             listCard.classList.add('list-card-1')
-            drag.style.visibility = 'visible'
+            // drag.style.visibility = 'visible'
             deleteButton.style.visibility = 'hidden'
         }
         cardText.classList.add('list-card-text')
@@ -154,7 +154,12 @@ class UIHandler {
         deleteButton.appendChild(deleteIcon)
         buttonContainer.appendChild(drag)
 
-        view.appendChild(listCard)
+        if(view.firstChild === null){
+            view.appendChild(listCard)
+
+        } else {
+            view.insertBefore(listCard, view.children[0])
+        }
 
         listCard.addEventListener('click', e => {
             // listCard.classList.remove('active')
@@ -229,7 +234,12 @@ class UIHandler {
         edit.appendChild(editIcon)
         deleteButton.appendChild(deleteButtonIcon)
 
-        taskElement.appendChild(taskItem)
+        if(taskElement.children.length === null){
+            taskElement.appendChild(taskItem)
+
+        } else {
+            taskElement.insertBefore(taskItem, taskElement.children[0])
+        }
 
         inputText.addEventListener('click', e => {
             console.log('inputText')
