@@ -12,6 +12,13 @@ body {
     scrollbar-width: none;
 }
 
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: min-content;
+}
+
 h1 {
     display: flex;
     justify-content: space-around;
