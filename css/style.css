@@ -11,7 +11,7 @@ body {
 
 h1 {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -185,6 +185,37 @@ input[type=text]:focus::placeholder {
   opacity: 0.5;
 }
 
+.addFormTextInput {
+  background-color: #535E79;
+  color: #fdfffc;
+}
+
+.labelTextInput {
+  background-color: transparent;
+  color: #fdfffc;
+  cursor: pointer;
+  width: 100%;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: large;
+}
+.labelTextInput:focus {
+  cursor: text;
+}
+
+.headerTextInput {
+  background-color: transparent;
+  color: #fdfffc;
+  text-align: center;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: auto;
+  font-size: xx-large;
+}
+.headerTextInput:focus {
+  cursor: text;
+}
+
 input[type=checkbox] {
   appearance: none;
   border-radius: 5px;
@@ -203,27 +234,6 @@ input[type=checkbox]::after {
   position: relative;
   top: 0;
   left: 0;
-}
-
-.addFormTextInput {
-  background-color: #535E79;
-  color: #fdfffc;
-}
-
-.labelTextInput {
-  background-color: transparent;
-  color: #fdfffc;
-  cursor: pointer;
-  width: 100%;
-  font-size: large;
-}
-
-.headerTextInput {
-  background-color: transparent;
-  color: #fdfffc;
-  text-align: center;
-  cursor: auto;
-  font-size: xx-large;
 }
 
 .checkLabel {
@@ -247,8 +257,13 @@ input[type=checkbox]::after {
 }
 
 .btn-primary {
+  border-radius: 5px;
+  background-color: transparent;
+  color: #2ec4b6;
+}
+.btn-primary:hover {
   background-color: #2ec4b6;
-  color: #fdfffc;
+  color: #373F51;
 }
 
 .btn-danger {
@@ -262,8 +277,13 @@ input[type=checkbox]::after {
 }
 
 .btn-secondary {
-  background-color: #535E79;
+  border-radius: 5px;
+  background-color: transparent;
   color: #fdfffc;
+}
+.btn-secondary:hover {
+  background-color: #fdfffc;
+  color: #373F51;
 }
 
 .btn-warning {
@@ -277,6 +297,11 @@ input[type=checkbox]::after {
 }
 
 .btn-success {
+  border-radius: 5px;
+  background-color: transparent;
+  color: #44af69;
+}
+.btn-success:hover {
   background-color: #44af69;
   color: #fdfffc;
 }
@@ -284,6 +309,9 @@ input[type=checkbox]::after {
 .btn-dark {
   background-color: #323031;
   color: #fdfffc;
+}
+.btn-dark:hover {
+  background-color: #535E79;
 }
 
 .btn-transparent {
@@ -302,6 +330,12 @@ input[type=checkbox]::after {
 }
 
 @media (max-width: 900px) {
+  h1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   #viewToDoList {
     width: 100%;
     left: 0;

@@ -123,7 +123,7 @@ class UIHandler {
         const cardTitle = document.createElement('div')
         const cardTaskCount = document.createElement('em')
         const buttonContainer = document.createElement('div')
-        const drag = document.createElement('i')
+        // const drag = document.createElement('i')
         const deleteButton = document.createElement('button')
         const deleteIcon = document.createElement('i')
 
@@ -142,7 +142,7 @@ class UIHandler {
         cardTitle.classList.add('list-card-title')
         cardTitle.innerHTML = `${list.name}`
         cardTaskCount.innerHTML = `${list.tasks.length} Tasks`
-        drag.classList.add('bi', 'bi-grip-vertical')
+        // drag.classList.add('bi', 'bi-grip-vertical')
         deleteButton.classList.add('btn-danger')
         deleteIcon.classList.add('bi', 'bi-trash-fill')
 
@@ -152,7 +152,7 @@ class UIHandler {
         listCard.appendChild(buttonContainer)
         buttonContainer.appendChild(deleteButton)
         deleteButton.appendChild(deleteIcon)
-        buttonContainer.appendChild(drag)
+        // buttonContainer.appendChild(drag)
 
         if(view.firstChild === null){
             view.appendChild(listCard)
@@ -207,7 +207,8 @@ class UIHandler {
         const taskItem = document.createElement('li')
         taskItem.classList.add('task-card-1')
         const inputCheckbox = document.createElement('input')
-        const inputText = document.createElement('label')
+        const label = document.createElement('label')
+        const labelTextBox = document.createElement('input')
         const taskButtons = document.createElement('div')
         const edit = document.createElement('button')
         const editIcon = document.createElement('i')
@@ -217,9 +218,12 @@ class UIHandler {
         inputCheckbox.type = 'checkbox'
         inputCheckbox.checked = task.completed
         inputCheckbox.id = `checkBox${task.id}`
-        inputText.classList.add('checkLabel')
-        inputText.htmlFor = `checkBox${task.id}`
-        inputText.innerHTML = `<input id="taskInput${task.id}" type="text" disabled value="${task.name}" class="labelTextInput"></input>`
+        label.classList.add('checkLabel')
+        label.htmlFor = `checkBox${task.id}`
+        labelTextBox.classList.add('labelTextInput')
+        labelTextBox.type = 'text'
+        labelTextBox.value = task.name
+        labelTextBox.disabled = true
         taskButtons.classList.add('taskButtons')
         edit.classList.add('btn-warning')
         deleteButton.classList.add('btn-danger')
@@ -227,7 +231,8 @@ class UIHandler {
         deleteButtonIcon.classList.add('bi', 'bi-trash-fill')
 
         taskItem.appendChild(inputCheckbox)
-        taskItem.appendChild(inputText)
+        taskItem.appendChild(label)
+        label.appendChild(labelTextBox)
         taskItem.appendChild(taskButtons)
         taskButtons.appendChild(edit)
         taskButtons.appendChild(deleteButton)
@@ -241,14 +246,30 @@ class UIHandler {
             taskElement.insertBefore(taskItem, taskElement.children[0])
         }
 
-        inputText.addEventListener('click', e => {
-            console.log('inputText')
-            storageHandler.updateCheckStatus(task.id)
-            renderFunc.saveAndRender()
+        label.addEventListener('click', e => {
+            if(labelTextBox.disabled){
+                storageHandler.updateCheckStatus(task.id)
+                renderFunc.saveAndRender()
+            } else {
+                return
+            }
         })
 
         edit.addEventListener('click', e => {
-            console.log('It works!')
+            console.log('Clicked')
+            labelTextBox.disabled = false
+            labelTextBox.focus()
+            editIcon.classList.remove('bi-pencil-fill')
+            editIcon.classList.add('bi-check-circle-fill')
+            edit.classList.remove('btn-warning')
+            edit.classList.add('btn-success')
+        })
+        labelTextBox.addEventListener('blur', e=>{
+            labelTextBox.disabled = true
+            const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
+            const selectedTask = selectedList.tasks.find(_task => _task.id === task.id)
+            selectedTask.name = labelTextBox.value
+            renderFunc.saveAndRender()
         })
         deleteButton.addEventListener('click', e => {
             storageHandler.removeTask(task.id)
@@ -383,13 +404,13 @@ class toggleListFunc {
         const editBtn = document.createElement('button')
         const p = document.createElement('p')
 
-        closeBtn.classList.add('btn-transparent')
-        closeBtn.innerHTML = `<i class="bi bi-arrow-left-square-fill"></i> Close`
+        closeBtn.classList.add('btn-primary')
+        closeBtn.innerHTML = `<i class="bi bi-arrow-left"></i> Close`
         input.classList.add('headerTextInput')
         input.type = 'text'
         input.value = list.name
         input.disabled = true
-        editBtn.classList.add('btn-transparent')
+        editBtn.classList.add('btn-warning')
         editBtn.innerHTML = `<i class="bi bi-pencil-fill"></i> Edit`
         p.innerHTML = 'Created: '+dateCreated
 
@@ -408,7 +429,21 @@ class toggleListFunc {
             renderFunc.saveAndRender()
         })
         editBtn.addEventListener('click', e =>{
+            input.disabled = false
+            input.focus()
+            editBtn.innerHTML = `<i class="bi bi-check-circle-fill"></i> Save`
+            editBtn.classList.remove('btn-warning')
+            editBtn.classList.add('btn-success')
+        })
 
+        input.addEventListener('blur', e =>{
+            input.disabled = true
+            editBtn.innerHTML = `<i class="bi bi-pencil-fill"></i> Edit`
+            editBtn.classList.add('btn-warning')
+            editBtn.classList.remove('btn-success')
+            const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
+            selectedList.name = input.value
+            renderFunc.saveAndRender()
         })
 
         listTasks.forEach(task => {

@@ -14,7 +14,7 @@ body {
 
 h1 {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -248,6 +248,37 @@ input[type="text"] {
     }
 }
 
+.addFormTextInput {
+    background-color: var.$granite-gray;
+    color: var.$primary-white;
+}
+
+.labelTextInput {
+    background-color: transparent;
+    color: var.$primary-white;
+    cursor: pointer;
+    width: 100%;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: large;
+    &:focus{
+        cursor: text;
+    }
+}
+
+.headerTextInput {
+    background-color: transparent;
+    color: var.$primary-white;
+    text-align: center;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: auto;
+    font-size: xx-large;
+    &:focus{
+        cursor: text;
+    }
+}
+
 input[type="checkbox"] {
     appearance: none;
     border-radius: 5px;
@@ -270,27 +301,6 @@ input[type="checkbox"] {
         top: 0;
         left: 0;
     }
-}
-
-.addFormTextInput {
-    background-color: var.$granite-gray;
-    color: var.$primary-white;
-}
-
-.labelTextInput {
-    background-color: transparent;
-    color: var.$primary-white;
-    cursor: pointer;
-    width: 100%;
-    font-size: large;
-}
-
-.headerTextInput {
-    background-color: transparent;
-    color: var.$primary-white;
-    text-align: center;
-    cursor: auto;
-    font-size: xx-large;
 }
 
 .checkLabel {
@@ -318,8 +328,14 @@ input[type="checkbox"] {
 
 .btn-primary {
     @extend .btn;
-    background-color: var.$tiffany-blue;
-    color: var.$primary-white;
+    border-radius: 5px;
+    background-color: transparent;
+    color: var.$tiffany-blue;
+
+    &:hover{
+        background-color: var.$tiffany-blue;
+        color: var.$charcoal;
+    }
 }
 
 .btn-danger {
@@ -336,8 +352,14 @@ input[type="checkbox"] {
 
 .btn-secondary {
     @extend .btn;
-    background-color: var.$granite-gray;
+    border-radius: 5px;
+    background-color: transparent;
     color: var.$primary-white;
+
+    &:hover{
+        background-color: var.$primary-white;
+        color: var.$primary-grey;
+    }
 }
 
 .btn-warning {
@@ -354,14 +376,23 @@ input[type="checkbox"] {
 
 .btn-success {
     @extend .btn;
-    background-color: var.$medium-sea-green;
-    color: var.$primary-white;
+    border-radius: 5px;
+    background-color: transparent;
+    color: var.$medium-sea-green;
+    &:hover{
+        background-color: var.$medium-sea-green;
+        color: var.$primary-white;
+    }
 }
 
 .btn-dark {
     @extend .btn;
     background-color: var.$jet;
     color: var.$primary-white;
+
+    &:hover{
+        background-color: var.$granite-gray;
+    }
 }
 
 .btn-transparent {
@@ -381,6 +412,12 @@ input[type="checkbox"] {
 }
 
 @media (max-width: 900px) {
+    h1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
     #viewToDoList {
         width: 100%;
         // visibility: hidden;
