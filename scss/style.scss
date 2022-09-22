@@ -12,13 +12,6 @@ body {
     scrollbar-width: none;
 }
 
-nav{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-height: min-content;
-}
-
 h1 {
     display: flex;
     justify-content: space-around;
@@ -162,10 +155,13 @@ h1 {
     background-color: var.$jet;
     color: var.$primary-white;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     div {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         margin: 5px;
         height: 5vh;
@@ -268,7 +264,8 @@ input[type="text"] {
     margin: 5px;
     border-radius: 5px;
     font-size: large;
-    &:focus{
+
+    &:focus {
         cursor: text;
     }
 }
@@ -281,7 +278,8 @@ input[type="text"] {
     border-radius: 5px;
     cursor: auto;
     font-size: xx-large;
-    &:focus{
+
+    &:focus {
         cursor: text;
     }
 }
@@ -339,7 +337,7 @@ input[type="checkbox"] {
     background-color: transparent;
     color: var.$tiffany-blue;
 
-    &:hover{
+    &:hover {
         background-color: var.$tiffany-blue;
         color: var.$charcoal;
     }
@@ -363,7 +361,7 @@ input[type="checkbox"] {
     background-color: transparent;
     color: var.$primary-white;
 
-    &:hover{
+    &:hover {
         background-color: var.$primary-white;
         color: var.$primary-grey;
     }
@@ -386,7 +384,8 @@ input[type="checkbox"] {
     border-radius: 5px;
     background-color: transparent;
     color: var.$medium-sea-green;
-    &:hover{
+
+    &:hover {
         background-color: var.$medium-sea-green;
         color: var.$primary-white;
     }
@@ -397,7 +396,7 @@ input[type="checkbox"] {
     background-color: var.$jet;
     color: var.$primary-white;
 
-    &:hover{
+    &:hover {
         background-color: var.$granite-gray;
     }
 }
@@ -419,12 +418,13 @@ input[type="checkbox"] {
 }
 
 @media (max-width: 900px) {
-    h1{
+    h1 {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
+
     #viewToDoList {
         width: 100%;
         // visibility: hidden;

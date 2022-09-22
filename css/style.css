@@ -9,13 +9,6 @@ body {
   scrollbar-width: none;
 }
 
-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-height: min-content;
-}
-
 h1 {
   display: flex;
   justify-content: space-around;
@@ -122,10 +115,13 @@ h1 {
   background-color: #323031;
   color: #fdfffc;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .nav div {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin: 5px;
   height: 5vh;
