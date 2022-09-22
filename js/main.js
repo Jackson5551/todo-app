@@ -271,6 +271,35 @@ class eventListenerFunc {
             renderFunc.saveAndRender()
         }
     }
+    static addTaskEvent(e) {
+        e.preventDefault()
+        console.log('Here')
+        const taskName = addTaskInput.value
+        if (taskName == null || taskName == '') {
+            return
+        } else {
+            const newTask = buildObjects.createTask(taskName)
+            let currentListID = selectedListID
+            if (currentListID === null) return
+            let lists = storageHandler.getLists()
+            lists.forEach((list, i) => {
+                if (+list.id == +currentListID) {
+                    let taskList = lists.tasks || []
+
+                    taskList.push(newTask)
+                    listsFromLocalStorage[i].tasks.push(newTask)
+                    list.tasks.push(listsFromLocalStorage)
+                    renderFunc.clearElement(allListsUL)
+                    renderFunc.saveAndRender()
+                    // UIHandler.addTasksToView(list, newTask)
+                } else {
+                    return
+                }
+                i++
+                addTaskInput.value = null
+            });
+        }
+    }
 }
 
 // Class to handle rendering
