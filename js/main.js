@@ -371,22 +371,49 @@ class toggleListFunc {
     }
     static openList(list) {
         let listTasks = list.tasks || []
-        let header = listViewHeader
+        const header = listViewHeader
         toggleListFunc.closeList()
-        console.log(list)
         const dateCreated = new Date(+list.id)
-        header.innerHTML = `
-    <span><h1><button onclick="" class="btn btn-transparent" id="closeButton"><i class="bi bi-arrow-left-square-fill"></i> Close</button>  <input type="text" disabled value="${list.name}" class="headerTextInput"></input> <button type="button" class="btn btn-transparent" id="${list.id}" onclick="storageHandler.editListName(${list.id})"><i class="bi bi-pencil-fill"></i> Edit</button></h1></span>
-    <p>Created: ${dateCreated}</p>
-    `
+        renderFunc.clearElement(header)
+        const div = document.createElement('div')
+        const span = document.createElement('span')
+        const h1 = document.createElement('h1')
+        const closeBtn = document.createElement('button')
+        const input = document.createElement('input')
+        const editBtn = document.createElement('button')
+        const p = document.createElement('p')
+
+        closeBtn.classList.add('btn-transparent')
+        closeBtn.innerHTML = `<i class="bi bi-arrow-left-square-fill"></i> Close`
+        input.classList.add('headerTextInput')
+        input.type = 'text'
+        input.value = list.name
+        input.disabled = true
+        editBtn.classList.add('btn-transparent')
+        editBtn.innerHTML = `<i class="bi bi-pencil-fill"></i> Edit`
+        p.innerHTML = 'Created: '+dateCreated
+
+        div.appendChild(span)
+        span.appendChild(h1)
+        h1.appendChild(closeBtn)
+        h1.appendChild(input)
+        h1.appendChild(editBtn)
+        div.appendChild(p)
+
+        header.appendChild(div)
+
+        closeBtn.addEventListener('click', e=>{
+            this.closeList()
+            selectedListID = null
+            renderFunc.saveAndRender()
+        })
+        editBtn.addEventListener('click', e =>{
+
+        })
+
         listTasks.forEach(task => {
             UIHandler.addTasksToView(list, task)
         });
-        if (window.innerWidth <= 750) {
-            console.log('Small')
-        } else {
-            console.log('Big')
-        }
     }
 }
 
