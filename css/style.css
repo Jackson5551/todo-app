@@ -169,8 +169,6 @@ input[type=text] {
   padding: 10px;
   max-width: 100%;
   min-width: 30%;
-  background-color: #535E79;
-  color: #fdfffc;
 }
 input[type=text]:focus {
   outline: none;
@@ -196,7 +194,7 @@ input[type=checkbox] {
 }
 input[type=checkbox]:checked + label {
   text-decoration: line-through;
-  opacity: 0.7;
+  opacity: 0.5;
   font-weight: 600;
 }
 input[type=checkbox]::after {
@@ -204,6 +202,27 @@ input[type=checkbox]::after {
   position: relative;
   top: 0;
   left: 0;
+}
+
+.addFormTextInput {
+  background-color: #535E79;
+  color: #fdfffc;
+}
+
+.labelTextInput {
+  background-color: transparent;
+  color: #fdfffc;
+  cursor: pointer;
+  width: 100%;
+  font-size: large;
+}
+
+.headerTextInput {
+  background-color: transparent;
+  color: #fdfffc;
+  text-align: center;
+  cursor: auto;
+  font-size: xx-large;
 }
 
 .checkLabel {

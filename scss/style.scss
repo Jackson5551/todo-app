@@ -234,8 +234,8 @@ input[type="text"] {
     min-width: 30%;
     // border-radius: 5px;
     // box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    background-color: var.$granite-gray;
-    color: var.$primary-white;
+    // background-color: var.$granite-gray;
+    // color: var.$primary-white;
 
     &:focus {
         outline: none;
@@ -265,7 +265,7 @@ input[type="checkbox"] {
     &:checked {
         &+label {
             text-decoration: line-through;
-            opacity: 0.7;
+            opacity: 0.5;
             font-weight: 600;
         }
     }
@@ -276,6 +276,27 @@ input[type="checkbox"] {
         top: 0;
         left: 0;
     }
+}
+
+.addFormTextInput {
+    background-color: var.$granite-gray;
+    color: var.$primary-white;
+}
+
+.labelTextInput {
+    background-color: transparent;
+    color: var.$primary-white;
+    cursor: pointer;
+    width: 100%;
+    font-size: large;
+}
+
+.headerTextInput {
+    background-color: transparent;
+    color: var.$primary-white;
+    text-align: center;
+    cursor: auto;
+    font-size: xx-large;
 }
 
 .checkLabel {
