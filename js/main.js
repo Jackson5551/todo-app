@@ -53,24 +53,14 @@ class storageHandler {
     }
     // Removes the list
     static removeList(date) {
-        console.log("Clicked!" + +date)
+        toggleListFunc.closeList()
         let lists = storageHandler.getLists()
         lists.forEach((list, i) => {
             if (+list.id === +date) {
                 listsFromLocalStorage.splice(i, 1);
-                console.log("SUCCESS " + i)
-                let header = listViewHeader
-                header.innerHTML = `
-                <h1>Open a List</h1>
-                <p></p>
-                `
-                renderFunc.clearElement(taskListUL)
-            } else {
-                console.log("FAILED " + i)
             }
             i++
         })
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(listsFromLocalStorage))
         renderFunc.saveAndRender()
     }
     // Removes a task
@@ -123,26 +113,19 @@ class UIHandler {
         const cardTitle = document.createElement('div')
         const cardTaskCount = document.createElement('em')
         const buttonContainer = document.createElement('div')
-        // const drag = document.createElement('i')
         const deleteButton = document.createElement('button')
         const deleteIcon = document.createElement('i')
 
-        // listCard.id = `${list.id}`
         if (+list.id === +selectedListID) {
             listCard.classList.add('list-card-1', 'active')
-            // drag.style.visibility = 'hidden'
-            // deleteButton.style.visibility = 'visible'
             toggleListFunc.openList(list)
         } else {
             listCard.classList.add('list-card-1')
-            // drag.style.visibility = 'visible'
-            // deleteButton.style.visibility = 'hidden'
         }
         cardText.classList.add('list-card-text')
         cardTitle.classList.add('list-card-title')
         cardTitle.innerHTML = `${list.name}`
         cardTaskCount.innerHTML = `${list.tasks.length} Tasks`
-        // drag.classList.add('bi', 'bi-grip-vertical')
         deleteButton.classList.add('btn-danger')
         deleteIcon.classList.add('bi', 'bi-trash-fill')
 
@@ -152,7 +135,6 @@ class UIHandler {
         listCard.appendChild(buttonContainer)
         buttonContainer.appendChild(deleteButton)
         deleteButton.appendChild(deleteIcon)
-        // buttonContainer.appendChild(drag)
 
         if (view.firstChild === null) {
             view.appendChild(listCard)
@@ -162,40 +144,35 @@ class UIHandler {
         }
 
         listCard.addEventListener('click', e => {
-            // listCard.classList.remove('active')
 
-            if (+selectedListID === +list.id) {
-                selectedListID = null
-                // listCard.classList.remove('active')
-                toggleListFunc.closeList()
-                renderFunc.saveAndRender()
+            if (e.target.tagName === 'button') {
+                if (+selectedListID === +list.id) {
+                    selectedListID = null
+                    toggleListFunc.closeList()
+                    renderFunc.saveAndRender()
 
 
-            } else if (selectedListID !== null || selectedListID === null) {
-                selectedListID = list.id
-                renderFunc.saveAndRender()
-                let lists = storageHandler.getLists() || []
-                lists.forEach((allList, i) => {
-                    if (+selectedListID === +allList.id) {
-                        // listCard.classList.remove('active')
-                        let listToOpen = lists[i]
-                        // selectedListID = list.id
-                        // toggleListFunc.closeList()
-                        toggleListFunc.openList(listToOpen)
-                    } else {
-                        return
-
-                        // listCard.classList.add('active')
-                        // toggleListFunc.closeList()
-                        // renderFunc.saveAndRender()
-
-                    }
-                    i++
-                })
+                } else if (selectedListID !== null || selectedListID === null) {
+                    selectedListID = list.id
+                    renderFunc.saveAndRender()
+                    let lists = storageHandler.getLists() || []
+                    lists.forEach((allList, i) => {
+                        if (+selectedListID === +allList.id) {
+                            let listToOpen = lists[i]
+                            toggleListFunc.openList(listToOpen)
+                        } else {
+                            return
+                        }
+                        i++
+                    })
+                }
+            } else {
+                return
             }
         })
 
         deleteButton.addEventListener('click', e => {
+            selectedListID = null
             storageHandler.removeList(+list.id)
         })
 
@@ -331,7 +308,6 @@ class eventListenerFunc {
                     list.tasks.push(listsFromLocalStorage)
                     renderFunc.clearElement(allListsUL)
                     renderFunc.saveAndRender()
-                    // UIHandler.addTasksToView(list, newTask)
                 } else {
                     return
                 }
@@ -369,16 +345,11 @@ class renderFunc {
         if (window.innerWidth > 900) {
             listView.style.visibility = 'visible';
             viewToDoListDiv.style.visibility = 'visible';
-            // console.log('Width > 900')
         } else if (window.innerWidth < 900) {
-            // console.log('Width < 900')
-            // console.log(selectedListID)
             if (selectedListID === null) {
-                // console.log('List ID is Null')
                 listView.style.visibility = 'visible';
                 viewToDoListDiv.style.visibility = 'hidden';
             } else if (selectedListID !== null) {
-                // console.log('List ID is not Null')
                 listView.style.visibility = 'hidden';
                 viewToDoListDiv.style.visibility = 'visible';
             }
@@ -392,12 +363,11 @@ class toggleListFunc {
     static closeList() {
         renderFunc.clearElement(taskListUL)
         let header = listViewHeader
-        // selectedListID = null
+        renderFunc.screenSizeAdjustment()
         header.innerHTML = `
-    <h1>Open a List</h1>
-    <p></p>
-    `
-
+        <h1>Open a List</h1>
+        <p></p>
+        `
     }
     static openList(list) {
         let listTasks = list.tasks || []
