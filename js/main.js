@@ -128,8 +128,8 @@ class UIHandler {
         const deleteIcon = document.createElement('i')
 
         // listCard.id = `${list.id}`
-        if(+list.id === +selectedListID){
-            listCard.classList.add('list-card-1','active')
+        if (+list.id === +selectedListID) {
+            listCard.classList.add('list-card-1', 'active')
             // drag.style.visibility = 'hidden'
             deleteButton.style.visibility = 'visible'
             toggleListFunc.openList(list)
@@ -154,7 +154,7 @@ class UIHandler {
         deleteButton.appendChild(deleteIcon)
         // buttonContainer.appendChild(drag)
 
-        if(view.firstChild === null){
+        if (view.firstChild === null) {
             view.appendChild(listCard)
 
         } else {
@@ -195,7 +195,7 @@ class UIHandler {
             }
         })
 
-        deleteButton.addEventListener('click', e=>{
+        deleteButton.addEventListener('click', e => {
             storageHandler.removeList(+list.id)
         })
 
@@ -239,7 +239,7 @@ class UIHandler {
         edit.appendChild(editIcon)
         deleteButton.appendChild(deleteButtonIcon)
 
-        if(taskElement.children.length === null){
+        if (taskElement.children.length === null) {
             taskElement.appendChild(taskItem)
 
         } else {
@@ -247,7 +247,7 @@ class UIHandler {
         }
 
         label.addEventListener('click', e => {
-            if(labelTextBox.disabled){
+            if (labelTextBox.disabled) {
                 storageHandler.updateCheckStatus(task.id)
                 renderFunc.saveAndRender()
             } else {
@@ -264,12 +264,21 @@ class UIHandler {
             edit.classList.remove('btn-warning')
             edit.classList.add('btn-success')
         })
-        labelTextBox.addEventListener('blur', e=>{
+        labelTextBox.addEventListener(('blur'), e => {
             labelTextBox.disabled = true
             const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
             const selectedTask = selectedList.tasks.find(_task => _task.id === task.id)
             selectedTask.name = labelTextBox.value
             renderFunc.saveAndRender()
+        })
+        labelTextBox.addEventListener('keypress', e => {
+            if (e.key === 'Enter') {
+                labelTextBox.disabled = true
+                const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
+                const selectedTask = selectedList.tasks.find(_task => _task.id === task.id)
+                selectedTask.name = labelTextBox.value
+                renderFunc.saveAndRender()
+            }
         })
         deleteButton.addEventListener('click', e => {
             storageHandler.removeTask(task.id)
@@ -412,7 +421,7 @@ class toggleListFunc {
         input.disabled = true
         editBtn.classList.add('btn-warning')
         editBtn.innerHTML = `<i class="bi bi-pencil-fill"></i> Edit`
-        p.innerHTML = 'Created: '+dateCreated
+        p.innerHTML = 'Created: ' + dateCreated
 
         div.appendChild(span)
         span.appendChild(h1)
@@ -423,12 +432,12 @@ class toggleListFunc {
 
         header.appendChild(div)
 
-        closeBtn.addEventListener('click', e=>{
+        closeBtn.addEventListener('click', e => {
             this.closeList()
             selectedListID = null
             renderFunc.saveAndRender()
         })
-        editBtn.addEventListener('click', e =>{
+        editBtn.addEventListener('click', e => {
             input.disabled = false
             input.focus()
             editBtn.innerHTML = `<i class="bi bi-check-circle-fill"></i> Save`
@@ -436,7 +445,7 @@ class toggleListFunc {
             editBtn.classList.add('btn-success')
         })
 
-        input.addEventListener('blur', e =>{
+        input.addEventListener('blur', e => {
             input.disabled = true
             editBtn.innerHTML = `<i class="bi bi-pencil-fill"></i> Edit`
             editBtn.classList.add('btn-warning')
@@ -444,6 +453,17 @@ class toggleListFunc {
             const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
             selectedList.name = input.value
             renderFunc.saveAndRender()
+        })
+        input.addEventListener('keypress', e => {
+            if (e.key === 'Enter') {
+                input.disabled = true
+                editBtn.innerHTML = `<i class="bi bi-pencil-fill"></i> Edit`
+                editBtn.classList.add('btn-warning')
+                editBtn.classList.remove('btn-success')
+                const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
+                selectedList.name = input.value
+                renderFunc.saveAndRender()
+            }
         })
 
         listTasks.forEach(task => {

@@ -157,6 +157,9 @@ h1 {
   background-color: #373F51;
   border-left: 1px solid #535E79;
 }
+#viewToDoList #viewToDoListHeader {
+  width: 100%;
+}
 
 .input-group {
   padding: 10px;
@@ -266,7 +269,7 @@ input[type=checkbox]::after {
 }
 .btn-primary:hover {
   background-color: #2ec4b6;
-  color: #373F51;
+  color: #fdfffc;
 }
 
 .btn-danger {
@@ -340,12 +343,43 @@ input[type=checkbox]::after {
     justify-content: center;
   }
   #viewToDoList {
-    width: 100%;
+    width: 100vw;
+    top: 5vh;
+    bottom: 5vh;
+    height: 100vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    word-wrap: break-word;
     left: 0;
     right: 0;
   }
+  #viewToDoList #viewToDoListHeader {
+    overflow-wrap: break-word;
+  }
+  #viewToDoList #viewToDoListHeader p {
+    overflow-wrap: break-word;
+  }
+  #viewToDoList .taskList {
+    height: 100%;
+    padding-bottom: 10vh;
+  }
+  .nav {
+    height: 5vh;
+  }
   #listView {
-    width: 100%;
+    width: 100vw;
+    top: 5vh;
+    bottom: 5vh;
+    height: 100vh;
+    overflow-y: hidden;
+  }
+  #listView #addListForm {
+    min-height: 10vh;
+    max-height: 10vh;
+  }
+  #listView .allLists {
+    height: 100%;
+    padding-bottom: 10vh;
   }
 }
 
