@@ -346,8 +346,8 @@ input[type=checkbox]::after {
     width: 100vw;
     top: 5vh;
     bottom: 5vh;
-    height: 100vh;
-    overflow-y: hidden;
+    height: 100%;
+    overflow-y: scroll;
     overflow-x: hidden;
     word-wrap: break-word;
     left: 0;
@@ -360,7 +360,19 @@ input[type=checkbox]::after {
     overflow-wrap: break-word;
   }
   #viewToDoList .taskList {
-    height: 100%;
+    list-style-type: none;
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: fit-content;
+    overflow-y: unset;
+    overflow-x: unset;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding-bottom: 10vh;
   }
   .nav {
@@ -370,7 +382,7 @@ input[type=checkbox]::after {
     width: 100vw;
     top: 5vh;
     bottom: 5vh;
-    height: 100vh;
+    height: 100%;
     overflow-y: hidden;
   }
   #listView #addListForm {
@@ -378,7 +390,7 @@ input[type=checkbox]::after {
     max-height: 10vh;
   }
   #listView .allLists {
-    height: 100%;
+    height: fit-content;
     padding-bottom: 10vh;
   }
 }
