@@ -131,12 +131,12 @@ class UIHandler {
         if (+list.id === +selectedListID) {
             listCard.classList.add('list-card-1', 'active')
             // drag.style.visibility = 'hidden'
-            deleteButton.style.visibility = 'visible'
+            // deleteButton.style.visibility = 'visible'
             toggleListFunc.openList(list)
         } else {
             listCard.classList.add('list-card-1')
             // drag.style.visibility = 'visible'
-            deleteButton.style.visibility = 'hidden'
+            // deleteButton.style.visibility = 'hidden'
         }
         cardText.classList.add('list-card-text')
         cardTitle.classList.add('list-card-title')
