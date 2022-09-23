@@ -58,6 +58,7 @@ class storageHandler {
         lists.forEach((list, i) => {
             if (+list.id === +date) {
                 listsFromLocalStorage.splice(i, 1);
+                // selectedListID = null
             }
             i++
         })
@@ -75,12 +76,6 @@ class storageHandler {
             }
             i++
         });
-    }
-    static editTask(id) {
-
-    }
-    static editListName(id) {
-
     }
     static updateCheckStatus(taskID) {
         const selectedList = listsFromLocalStorage.find(list => +list.id === +selectedListID)
@@ -143,37 +138,36 @@ class UIHandler {
             view.insertBefore(listCard, view.children[0])
         }
 
-        listCard.addEventListener('click', e => {
+        cardText.addEventListener('click', e => {
 
-            if (e.target.tagName === 'button') {
-                if (+selectedListID === +list.id) {
-                    selectedListID = null
-                    toggleListFunc.closeList()
-                    renderFunc.saveAndRender()
+            if (+selectedListID === +list.id) {
+                selectedListID = null
+                toggleListFunc.closeList()
+                renderFunc.saveAndRender()
 
+            } else if (selectedListID !== null || selectedListID === null) {
+                selectedListID = list.id
+                renderFunc.saveAndRender()
+                let lists = storageHandler.getLists() || []
+                lists.forEach((allList, i) => {
+                    if (+selectedListID === +allList.id) {
+                        let listToOpen = lists[i]
+                        toggleListFunc.openList(listToOpen)
 
-                } else if (selectedListID !== null || selectedListID === null) {
-                    selectedListID = list.id
-                    renderFunc.saveAndRender()
-                    let lists = storageHandler.getLists() || []
-                    lists.forEach((allList, i) => {
-                        if (+selectedListID === +allList.id) {
-                            let listToOpen = lists[i]
-                            toggleListFunc.openList(listToOpen)
-                        } else {
-                            return
-                        }
-                        i++
-                    })
-                }
-            } else {
-                return
+                    } else {
+
+                        return
+                    }
+                    i++
+                })
             }
+            
         })
 
         deleteButton.addEventListener('click', e => {
-            selectedListID = null
+            
             storageHandler.removeList(+list.id)
+            selectedListID = null
         })
 
     }
@@ -401,7 +395,6 @@ class toggleListFunc {
         div.appendChild(p)
 
         header.appendChild(div)
-
         closeBtn.addEventListener('click', e => {
             this.closeList()
             selectedListID = null

@@ -48,7 +48,6 @@ h1 {
   max-width: calc(100% - 30px);
   border-radius: 5px;
   display: flex;
-  justify-content: space-between;
   padding: 10px;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -57,10 +56,11 @@ h1 {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
   margin-top: 10px;
   cursor: pointer;
+  box-sizing: content-box;
 }
-.allLists .list-card-1 .list-card-content {
-  padding: 10px;
-  margin: 10px;
+.allLists .list-card-1 .list-card-text {
+  width: 100%;
+  height: 100%;
 }
 .allLists .list-card-1 .list-card-title {
   font-weight: 600;
