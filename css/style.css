@@ -292,7 +292,7 @@ input[type=checkbox]::after {
 }
 .btn-secondary:hover {
   background-color: #fdfffc;
-  color: #373F51;
+  color: #373f51;
 }
 
 .btn-warning {
