@@ -385,7 +385,7 @@ class toggleListFunc {
         input.disabled = true
         editBtn.classList.add('btn-warning')
         editBtn.innerHTML = `<i class="bi bi-pencil-fill"></i> Edit`
-        p.innerHTML = 'Created: ' + dateCreated.toLocaleDateString('en-us', {year: 'numeric', month: 'short', day: '2-digit'}) + ' at ' + dateCreated.toLocaleTimeString('en-us', {hour: '2-digit', minute: '2-digit'})
+        p.innerHTML = 'Created: ' + dateCreated.toLocaleDateString('en-us', {year: 'numeric', month: 'short', day: '2-digit'}) + ' at ' + dateCreated.toLocaleTimeString('en-us', {hour: 'numeric', minute: '2-digit'})
 
         div.appendChild(span)
         span.appendChild(h1)
