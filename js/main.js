@@ -69,9 +69,7 @@ class storageHandler {
         const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID) || []
         selectedList.tasks.forEach((task, i) => {
             if (+task.id == +id) {
-                console.log('Yep! ' + task.name)
                 selectedList.tasks.splice(i, 1)
-                console.log(selectedList)
                 renderFunc.saveAndRender()
             }
             i++
@@ -110,6 +108,7 @@ class UIHandler {
         const buttonContainer = document.createElement('div')
         const deleteButton = document.createElement('button')
         const deleteIcon = document.createElement('i')
+        const handle = document.createElement('i')
 
         if (+list.id === +selectedListID) {
             listCard.classList.add('list-card-1', 'active')
@@ -117,13 +116,17 @@ class UIHandler {
         } else {
             listCard.classList.add('list-card-1')
         }
+        listCard.id = list.id
         cardText.classList.add('list-card-text')
         cardTitle.classList.add('list-card-title')
         cardTitle.innerHTML = `${list.name}`
         cardTaskCount.innerHTML = `${list.tasks.length} Tasks`
+        // buttonContainer.classList.add('buttonContainer')
         deleteButton.classList.add('btn-danger')
         deleteIcon.classList.add('bi', 'bi-trash-fill')
+        handle.classList.add('bi','bi-grip-vertical','grip')
 
+        listCard.appendChild(handle)
         listCard.appendChild(cardText)
         cardText.appendChild(cardTitle)
         cardText.appendChild(cardTaskCount)
@@ -168,6 +171,44 @@ class UIHandler {
             
             storageHandler.removeList(+list.id)
             selectedListID = null
+        })
+
+        listCard.addEventListener('dragstart', e=>{
+            // const findThisList = listsFromLocalStorage.find(fList => fList.id === list.id)
+            // let oldList
+            console.log(list.id + ' started drag')
+        })
+        listCard.addEventListener('dragend', e=>{
+            let ulLength = allListsUL.childElementCount
+            let listLocation
+            var moveInArray = function (arr, from, to){
+                var item = arr.splice(from, 1)
+                console.log(item)
+                arr.splice(to, 0, item[0])
+                // storageHandler.save()
+            }
+
+            allListsUL.childNodes.forEach((node, i)=>{
+                if(node.id === list.id){
+                    listLocation = i
+                    console.log(listLocation)
+                    return
+                } else {
+                    i++
+                }
+            })
+            listLocation = ulLength-listLocation-1
+            listsFromLocalStorage.forEach((fList, i)=>{
+                if(fList.id === list.id){
+                    moveInArray(listsFromLocalStorage, i, (+listLocation))
+                    renderFunc.saveAndRender()
+                    console.log('moved')
+                    return
+                } else{
+                    i++
+                }
+            })
+
         })
 
     }
@@ -227,11 +268,11 @@ class UIHandler {
         })
 
         edit.addEventListener('click', e => {
-            console.log('Clicked')
             labelTextBox.disabled = false
             labelTextBox.focus()
-            editIcon.classList.remove('bi-pencil-fill')
+            editIcon.classList.remove('bi','bi-pencil-fill')
             editIcon.classList.add('bi-check-circle-fill')
+            // editIcon.classList.add('bx','bxs-save')
             edit.classList.remove('btn-warning')
             edit.classList.add('btn-success')
         })
@@ -284,7 +325,6 @@ class eventListenerFunc {
     }
     static addTaskEvent(e) {
         e.preventDefault()
-        console.log('Here')
         const taskName = addTaskInput.value
         if (taskName == null || taskName == '') {
             return
@@ -378,7 +418,7 @@ class toggleListFunc {
         const p = document.createElement('p')
 
         closeBtn.classList.add('btn-primary')
-        closeBtn.innerHTML = `<i class="bi bi-arrow-left"></i> Close`
+        closeBtn.innerHTML = `<i class="bi bi-arrow-left"></i> Collapse` 
         input.classList.add('headerTextInput')
         input.type = 'text'
         input.value = list.name
@@ -450,8 +490,12 @@ addTaskForm.addEventListener('submit', e => {
 window.addEventListener('resize', renderFunc.screenSizeAdjustment())
 
 window.onresize = () => {
-    console.log('Resize')
     renderFunc.screenSizeAdjustment()
 }
+
+new Sortable(allListsUL, {
+    handle: '.bi-grip-vertical', // handle's class
+    animation: 150
+});
 
 document.addEventListener('DOMContentLoaded', renderFunc.renderLists())
