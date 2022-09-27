@@ -173,12 +173,12 @@ class UIHandler {
             selectedListID = null
         })
 
-        listCard.addEventListener('dragstart', e=>{
+        listCard.addEventListener(('dragstart'), e=>{
             // const findThisList = listsFromLocalStorage.find(fList => fList.id === list.id)
             // let oldList
             console.log(list.id + ' started drag')
         })
-        listCard.addEventListener('dragend', e=>{
+        listCard.addEventListener(('dragend', 'touchend'), e=>{
             let ulLength = allListsUL.childElementCount
             let listLocation
             var moveInArray = function (arr, from, to){
