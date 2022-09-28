@@ -61,12 +61,14 @@ h1 {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        .grip{
+
+        .grip {
             padding-right: 5px;
             // width: 100%;
             height: 100%;
             cursor: grab;
         }
+
         .list-card-text {
             width: 100%;
             height: 100%;
@@ -80,6 +82,7 @@ h1 {
         .list-card-title {
             font-weight: 600;
         }
+
         // .buttonContainer{
         //     display: flex;
         //     align-items: center;
@@ -88,19 +91,24 @@ h1 {
 
     }
 
-    .list-card-1:hover {
-        background-color: var.$secondary-black;
-    }
+    // .list-card-1:hover {
+    //     background-color: var.$secondary-black;
+    // }
 
     .active {
         background-color: var.$secondary-black;
         padding-top: 20px;
         padding-bottom: 20px;
     }
-}
 
-.swapClass{
-    background-color: var.$primary-color;
+    .hover {
+        background-color: var.$secondary-black;
+    }
+
+    .isDraggingClass {
+        background-color: var.$primary-color;
+        opacity: 0.5;
+    }
 }
 
 .taskList {
@@ -133,6 +141,11 @@ h1 {
         box-shadow: var.$primary-box-shadow;
         margin: 10px;
 
+        .grip {
+            // height: 100%;
+            cursor: grab;
+        }
+
         .taskButtons {
             display: flex;
             justify-content: center;
@@ -140,9 +153,18 @@ h1 {
         }
     }
 
-    .task-card-1:hover {
+    .hover {
         background-color: var.$secondary-black;
     }
+
+    .isDraggingClass {
+        background-color: var.$primary-color;
+        opacity: 0.5;
+    }
+
+    // .task-card-1:hover {
+    //     background-color: var.$secondary-black;
+    // }
 }
 
 .nav {

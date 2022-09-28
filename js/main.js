@@ -124,7 +124,7 @@ class UIHandler {
         // buttonContainer.classList.add('buttonContainer')
         deleteButton.classList.add('btn-danger')
         deleteIcon.classList.add('bi', 'bi-trash-fill')
-        handle.classList.add('bi','bi-grip-vertical','grip')
+        handle.classList.add('bi', 'bi-grip-vertical', 'grip')
 
         listCard.appendChild(handle)
         listCard.appendChild(cardText)
@@ -164,53 +164,110 @@ class UIHandler {
                     i++
                 })
             }
-            
+
         })
 
         deleteButton.addEventListener('click', e => {
-            
+
             storageHandler.removeList(+list.id)
             selectedListID = null
         })
 
-        listCard.addEventListener(('dragstart'), e=>{
-            // const findThisList = listsFromLocalStorage.find(fList => fList.id === list.id)
-            // let oldList
-            console.log(list.id + ' started drag')
+        const dragStartEvents = [
+            'dragstart',
+            'touchstart'
+        ]
+        const dragEndEvents = [
+            'dragend',
+            'touchend'
+        ]
+        dragStartEvents.forEach(event => {
+            listCard.addEventListener(event, () => {
+                listCard.classList.add('isDraggingClass')
+                listCard.classList.remove('hover')
+            })
         })
-        listCard.addEventListener(('dragend', 'touchend'), e=>{
+        listCard.addEventListener('dragend', () => {
+            console.log('dragend')
+            listCard.classList.remove('isDraggingClass')
             let ulLength = allListsUL.childElementCount
             let listLocation
-            var moveInArray = function (arr, from, to){
+            var moveInArray = function (arr, from, to) {
                 var item = arr.splice(from, 1)
-                console.log(item)
+                // console.log(item)
                 arr.splice(to, 0, item[0])
-                // storageHandler.save()
+                storageHandler.save()
             }
 
-            allListsUL.childNodes.forEach((node, i)=>{
-                if(node.id === list.id){
+            allListsUL.childNodes.forEach((node, i) => {
+                if (node.id === list.id) {
                     listLocation = i
-                    console.log(listLocation)
                     return
                 } else {
                     i++
                 }
             })
-            listLocation = ulLength-listLocation-1
-            listsFromLocalStorage.forEach((fList, i)=>{
-                if(fList.id === list.id){
-                    moveInArray(listsFromLocalStorage, i, (+listLocation))
+            let newListLocation = ulLength - listLocation - 1
+            listsFromLocalStorage.forEach((fList, i) => {
+                if (fList.id === list.id) {
+                    moveInArray(listsFromLocalStorage, i, (newListLocation))
                     renderFunc.saveAndRender()
-                    console.log('moved')
+                    console.log("Drag Old Location " + i)
+                    console.log("Drag New Location " + newListLocation)
                     return
-                } else{
+                } else {
                     i++
                 }
             })
-
         })
+        listCard.addEventListener('touchend', () => {
+            console.log('touchend')
+            listCard.classList.remove('isDraggingClass')
+            let ulLength = listsFromLocalStorage.length
+            console.log(ulLength)
+            let listLocation = null
+            var moveInArray = function (arr, from, to) {
+                var item = arr.splice(from, 1)
+                // console.log(item)
+                arr.splice(to, 0, item[0])
+                storageHandler.save()
+            }
 
+            allListsUL.childNodes.forEach((node, i) => {
+                if (node.id === list.id && listLocation === null) {
+                    console.log(list.id)
+                    listLocation = i
+                    console.log('List Location '+listLocation-1)
+                    return
+                } else {
+                    i++
+                }
+            })
+            let newListLocation = ulLength - listLocation - 1
+            listsFromLocalStorage.forEach((fList, i) => {
+                if (fList.id === list.id && listLocation !== null) {
+                    moveInArray(listsFromLocalStorage, i, newListLocation)
+                    renderFunc.saveAndRender()
+                    console.log("Old Location " + i)
+                    console.log("New Location " + newListLocation)
+                    return
+                } else {
+                    i++
+                }
+            })
+        })
+        buttonContainer.addEventListener('mouseover', () => {
+            listCard.classList.add('hover')
+        })
+        buttonContainer.addEventListener('mouseleave', () => {
+            listCard.classList.remove('hover')
+        })
+        cardText.addEventListener('mouseover', () => {
+            listCard.classList.add('hover')
+        })
+        cardText.addEventListener('mouseleave', () => {
+            listCard.classList.remove('hover')
+        })
     }
     // Create task elements
     static addTasksToView(parent, task) {
@@ -226,6 +283,7 @@ class UIHandler {
         const editIcon = document.createElement('i')
         const deleteButton = document.createElement('button')
         const deleteButtonIcon = document.createElement('i')
+        const handle = document.createElement('i')
 
         inputCheckbox.type = 'checkbox'
         inputCheckbox.checked = task.completed
@@ -241,7 +299,9 @@ class UIHandler {
         deleteButton.classList.add('btn-danger')
         editIcon.classList.add('bi', 'bi-pencil-fill')
         deleteButtonIcon.classList.add('bi', 'bi-trash-fill')
+        handle.classList.add('bi', 'bi-grip-vertical', 'grip')
 
+        taskItem.appendChild(handle)
         taskItem.appendChild(inputCheckbox)
         taskItem.appendChild(label)
         label.appendChild(labelTextBox)
@@ -270,7 +330,7 @@ class UIHandler {
         edit.addEventListener('click', e => {
             labelTextBox.disabled = false
             labelTextBox.focus()
-            editIcon.classList.remove('bi','bi-pencil-fill')
+            editIcon.classList.remove('bi', 'bi-pencil-fill')
             editIcon.classList.add('bi-check-circle-fill')
             // editIcon.classList.add('bx','bxs-save')
             edit.classList.remove('btn-warning')
@@ -294,6 +354,18 @@ class UIHandler {
         })
         deleteButton.addEventListener('click', e => {
             storageHandler.removeTask(task.id)
+        })
+        label.addEventListener('mouseover', () => {
+            taskItem.classList.add('hover')
+        })
+        label.addEventListener('mouseleave', () => {
+            taskItem.classList.remove('hover')
+        })
+        taskItem.addEventListener('dragstart', () => {
+            taskItem.classList.add('isDraggingClass')
+        })
+        taskItem.addEventListener('dragend', () => {
+            taskItem.classList.remove('isDraggingClass')
         })
 
     }
@@ -418,14 +490,14 @@ class toggleListFunc {
         const p = document.createElement('p')
 
         closeBtn.classList.add('btn-primary')
-        closeBtn.innerHTML = `<i class="bi bi-arrow-left"></i> Collapse` 
+        closeBtn.innerHTML = `<i class="bi bi-arrow-left"></i> Collapse`
         input.classList.add('headerTextInput')
         input.type = 'text'
         input.value = list.name
         input.disabled = true
         editBtn.classList.add('btn-warning')
         editBtn.innerHTML = `<i class="bi bi-pencil-fill"></i> Edit`
-        p.innerHTML = 'Created: ' + dateCreated.toLocaleDateString('en-us', {year: 'numeric', month: 'short', day: '2-digit'}) + ' at ' + dateCreated.toLocaleTimeString('en-us', {hour: 'numeric', minute: '2-digit'})
+        p.innerHTML = 'Created: ' + dateCreated.toLocaleDateString('en-us', { year: 'numeric', month: 'short', day: '2-digit' }) + ' at ' + dateCreated.toLocaleTimeString('en-us', { hour: 'numeric', minute: '2-digit' })
 
         div.appendChild(span)
         span.appendChild(h1)
@@ -497,5 +569,9 @@ new Sortable(allListsUL, {
     handle: '.bi-grip-vertical', // handle's class
     animation: 150
 });
+new Sortable(taskListUL, {
+    handle: '.bi-grip-vertical',
+    animation: 150
+})
 
 document.addEventListener('DOMContentLoaded', renderFunc.renderLists())
