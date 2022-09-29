@@ -58,7 +58,6 @@ class storageHandler {
         lists.forEach((list, i) => {
             if (+list.id === +id) {
                 listsFromLocalStorage.splice(i, 1);
-                // selectedListID = null
             }
             i++
         })
@@ -121,7 +120,6 @@ class UIHandler {
         cardTitle.classList.add('list-card-title')
         cardTitle.innerHTML = `${list.name}`
         cardTaskCount.innerHTML = `${list.tasks.length} Tasks`
-        // buttonContainer.classList.add('buttonContainer')
         deleteButton.classList.add('btn-danger', 'smallScreenDeleteBtn')
         deleteIcon.classList.add('bi', 'bi-trash-fill')
         handle.classList.add('bi', 'bi-grip-vertical', 'grip')
@@ -168,7 +166,6 @@ class UIHandler {
         })
 
         deleteButton.addEventListener('click', () => {
-            // listCard.innerHTML = ''
             const warningBox = document.createElement('li')
             const div = document.createElement('div')
             const warningText = document.createElement('span')
@@ -177,7 +174,7 @@ class UIHandler {
             const cancelButton = document.createElement('button')
 
             warningBox.classList.remove('active', 'hover')
-            warningBox.classList.add('list-card-1','warning')
+            warningBox.classList.add('list-card-1', 'warning')
             div.classList.add('warning-container')
             warningText.innerHTML = `<strong>Delete</strong> ${list.name}?`
             warningButtonContainer.classList.add('warning-btn-container')
@@ -186,7 +183,7 @@ class UIHandler {
             cancelButton.classList.add('btn-secondary-invert')
             cancelButton.innerHTML = '<i class="bi bi-x-circle-fill"></i> <strong>Cancel</strong>'
 
-            
+
             div.appendChild(warningText)
             div.appendChild(warningButtonContainer)
             warningButtonContainer.appendChild(deleteForSureButton)
@@ -196,25 +193,17 @@ class UIHandler {
             view.insertBefore(warningBox, listCard)
             listCard.style.display = 'none'
 
-            deleteForSureButton.addEventListener('click', ()=>{
+            deleteForSureButton.addEventListener('click', () => {
                 storageHandler.removeList(list.id)
                 selectedListID = null
             })
 
-            cancelButton.addEventListener('click', ()=>{
+            cancelButton.addEventListener('click', () => {
                 view.removeChild(warningBox)
                 listCard.style.display = 'flex'
             })
         })
 
-        const dragStartEvents = [
-            'dragstart',
-            'touchstart'
-        ]
-        const dragEndEvents = [
-            'dragend',
-            'touchend'
-        ]
         listCard.addEventListener('dragstart', () => {
             listCard.classList.add('isDraggingClass')
             listCard.classList.remove('hover')
@@ -325,7 +314,6 @@ class UIHandler {
         deleteButton.classList.add('btn-danger')
         editIcon.classList.add('bi', 'bi-pencil-fill')
         deleteButtonIcon.classList.add('bi', 'bi-trash-fill')
-        // handle.classList.add('bi', 'bi-grip-vertical', 'grip')
         handle.classList.add('grip')
         handle.innerHTML = `<i class="bi bi-grip-vertical"></i>`
 
@@ -360,7 +348,6 @@ class UIHandler {
             labelTextBox.focus()
             editIcon.classList.remove('bi', 'bi-pencil-fill')
             editIcon.classList.add('bi-check-circle-fill')
-            // editIcon.classList.add('bx','bxs-save')
             edit.classList.remove('btn-warning')
             edit.classList.add('btn-success')
         })
@@ -402,31 +389,25 @@ class UIHandler {
             taskItem.classList.remove('isDraggingClass')
             let selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
             let ulLength = taskListUL.childElementCount
-            console.log(ulLength)
             let listLocation = null
             var moveInArray = function (arr, from, to) {
                 var item = arr.splice(from, 1)
                 arr.splice(to, 0, item[0])
                 storageHandler.save()
             }
-            console.log(taskListUL)
             taskListUL.childNodes.forEach((node, i) => {
                 if (node.id === task.id && listLocation === null) {
                     listLocation = i
-                    console.log(listLocation)
                     return
                 } else {
                     i++
                 }
             })
             let newListLocation = ulLength - listLocation - 1
-            console.log('newListLocation ' + newListLocation)
 
             selectedList.tasks.forEach((fTask, i) => {
                 if (fTask.id === task.id && listLocation !== null) {
                     moveInArray(selectedList.tasks, i, newListLocation)
-                    console.log('Previous Location ' + i)
-                    console.log('New Location ' + newListLocation)
                     renderFunc.saveAndRender()
                     return
                 } else {
@@ -438,31 +419,25 @@ class UIHandler {
             taskItem.classList.remove('isDraggingClass')
             let selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
             let ulLength = taskListUL.childElementCount
-            console.log('uLength ' + ulLength)
             let listLocation = null
             var moveInArray = function (arr, from, to) {
                 var item = arr.splice(from, 1)
                 arr.splice(to, 0, item[0])
                 storageHandler.save()
             }
-            console.log(taskListUL)
             taskListUL.childNodes.forEach((node, i) => {
                 if (node.id === task.id && listLocation === null) {
                     listLocation = i
-                    console.log('listLocation' + listLocation)
                     return
                 } else {
                     i++
                 }
             })
             let newListLocation = ulLength - listLocation - 2
-            console.log('newListLocation ' + newListLocation)
 
             selectedList.tasks.forEach((fTask, i) => {
                 if (fTask.id === task.id && listLocation !== null) {
                     moveInArray(selectedList.tasks, i, newListLocation)
-                    console.log('Previous Location ' + i)
-                    console.log('New Location ' + newListLocation)
                     renderFunc.saveAndRender()
                     return
                 } else {
@@ -535,16 +510,13 @@ class renderFunc {
         renderFunc.renderLists()
     }
     static renderLists() {
-
         listsFromLocalStorage.forEach(list => {
-            const selectedList = listsFromLocalStorage.find(list => list.id === selectedListID)
             UIHandler.addListToView(list)
         });
     }
     static clearElement(element) {
         element.innerHTML = ''
     }
-
 
     static saveAndRender() {
         storageHandler.save()
@@ -669,12 +641,10 @@ window.onresize = () => {
 }
 
 new Sortable(allListsUL, {
-    // handle: '.bi-grip-vertical', // handle's class
     handle: '.grip', // handle's class
     animation: 150
 });
 new Sortable(taskListUL, {
-    // handle: '.bi-grip-vertical',
     handle: '.grip',
     animation: 150
 })
