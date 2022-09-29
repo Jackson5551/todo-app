@@ -122,7 +122,7 @@ class UIHandler {
         cardTitle.innerHTML = `${list.name}`
         cardTaskCount.innerHTML = `${list.tasks.length} Tasks`
         // buttonContainer.classList.add('buttonContainer')
-        deleteButton.classList.add('btn-danger')
+        deleteButton.classList.add('btn-danger', 'smallScreenDeleteBtn')
         deleteIcon.classList.add('bi', 'bi-trash-fill')
         handle.classList.add('bi', 'bi-grip-vertical', 'grip')
 
@@ -179,12 +179,12 @@ class UIHandler {
             warningBox.classList.remove('active', 'hover')
             warningBox.classList.add('list-card-1','warning')
             div.classList.add('warning-container')
-            warningText.innerHTML = `Delete ${list.name}?`
+            warningText.innerHTML = `<strong>Delete</strong> ${list.name}?`
             warningButtonContainer.classList.add('warning-btn-container')
             deleteForSureButton.classList.add('btn-danger-invert')
-            deleteForSureButton.innerHTML = 'Delete'
+            deleteForSureButton.innerHTML = '<i class="bi bi-trash-fill"></i> <strong>Delete</strong>'
             cancelButton.classList.add('btn-secondary-invert')
-            cancelButton.innerHTML = 'Cancel'
+            cancelButton.innerHTML = '<i class="bi bi-x-circle-fill"></i> <strong>Cancel</strong>'
 
             
             div.appendChild(warningText)

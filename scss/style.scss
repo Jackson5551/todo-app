@@ -67,6 +67,7 @@ h1 {
             // width: 100%;
             height: 100%;
             cursor: grab;
+            opacity: 0.25;
         }
 
         .list-card-text {
@@ -107,6 +108,7 @@ h1 {
     }
 
     .warning-container {
+        text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -168,6 +170,7 @@ h1 {
             justify-content: center;
             align-items: center;
             cursor: grab;
+            opacity: 0.25;
         }
 
         .taskButtons {
@@ -494,7 +497,9 @@ input[type="checkbox"] {
         align-items: center;
         justify-content: center;
     }
-
+    .smallScreenDeleteBtn{
+        font-size: x-large;
+    }
     #viewToDoList {
         width: 100vw;
         top: 5vh;

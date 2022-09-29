@@ -62,6 +62,7 @@ h1 {
   padding-right: 5px;
   height: 100%;
   cursor: grab;
+  opacity: 0.25;
 }
 .allLists .list-card-1 .list-card-text {
   width: 100%;
@@ -84,6 +85,7 @@ h1 {
   color: #fdfffc;
 }
 .allLists .warning-container {
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -138,6 +140,7 @@ h1 {
   justify-content: center;
   align-items: center;
   cursor: grab;
+  opacity: 0.25;
 }
 .taskList .task-card-1 .taskButtons {
   display: flex;
@@ -410,6 +413,9 @@ input[type=checkbox]::after {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+  .smallScreenDeleteBtn {
+    font-size: x-large;
   }
   #viewToDoList {
     width: 100vw;
