@@ -79,6 +79,24 @@ h1 {
   padding-top: 20px;
   padding-bottom: 20px;
 }
+.allLists .warning {
+  background-color: #e71d36;
+  color: #fdfffc;
+}
+.allLists .warning-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.allLists .warning-btn-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  padding: 5px;
+}
 .allLists .hover {
   background-color: #292e3d;
 }
@@ -115,6 +133,10 @@ h1 {
   margin: 10px;
 }
 .taskList .task-card-1 .grip {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: grab;
 }
 .taskList .task-card-1 .taskButtons {
@@ -191,22 +213,22 @@ h1 {
   border-bottom: 1px solid #535e79;
 }
 
-input[type=text] {
+input[type=text], input[type=textarea] {
   border: 0;
   padding: 10px;
   max-width: 100%;
   min-width: 30%;
 }
-input[type=text]:focus {
+input[type=text]:focus, input[type=textarea]:focus {
   outline: none;
   background-color: #fdfffc;
   color: #535e79;
 }
-input[type=text]::placeholder {
+input[type=text]::placeholder, input[type=textarea]::placeholder {
   color: #fdfffc;
   opacity: 0.5;
 }
-input[type=text]:focus::placeholder {
+input[type=text]:focus::placeholder, input[type=textarea]:focus::placeholder {
   color: #535e79;
   opacity: 0.5;
 }
@@ -224,6 +246,8 @@ input[type=text]:focus::placeholder {
   margin: 5px;
   border-radius: 5px;
   font-size: large;
+  word-wrap: break-word;
+  resize: none;
 }
 .labelTextInput:focus {
   cursor: text;
@@ -271,12 +295,12 @@ input[type=checkbox]::after {
   cursor: pointer;
 }
 
-.btn, .btn-transparent, .btn-dark, .btn-success, .btn-warning, .btn-secondary, .btn-danger, .btn-primary {
+.btn, .btn-transparent, .btn-dark, .btn-success, .btn-warning, .btn-secondary-invert, .btn-secondary, .btn-danger-invert, .btn-danger, .btn-primary {
   padding: 10px;
   border-style: none;
   cursor: pointer;
 }
-.btn:hover:active, .btn-transparent:hover:active, .btn-dark:hover:active, .btn-success:hover:active, .btn-warning:hover:active, .btn-secondary:hover:active, .btn-danger:hover:active, .btn-primary:hover:active {
+.btn:hover:active, .btn-transparent:hover:active, .btn-dark:hover:active, .btn-success:hover:active, .btn-warning:hover:active, .btn-secondary-invert:hover:active, .btn-secondary:hover:active, .btn-danger-invert:hover:active, .btn-danger:hover:active, .btn-primary:hover:active {
   background-color: #323031;
   color: #fdfffc;
   border: none;
@@ -302,6 +326,18 @@ input[type=checkbox]::after {
   color: #fdfffc;
 }
 
+.btn-danger-invert {
+  border-radius: 5px;
+  background-color: #fdfffc;
+  border: 1px solid transparent;
+  color: #e71d36;
+}
+.btn-danger-invert:hover {
+  background-color: #e71d36;
+  border: 1px solid #fdfffc;
+  color: #fdfffc;
+}
+
 .btn-secondary {
   border-radius: 5px;
   background-color: transparent;
@@ -310,6 +346,19 @@ input[type=checkbox]::after {
 .btn-secondary:hover {
   background-color: #fdfffc;
   color: #373f51;
+}
+
+.btn-secondary-invert {
+  border-radius: 5px;
+  background-color: #fdfffc;
+  border: 1px solid transparent;
+  color: #373f51;
+  box-sizing: content-box;
+}
+.btn-secondary-invert:hover {
+  background-color: #373f51;
+  border: 1px solid #fdfffc;
+  color: #fdfffc;
 }
 
 .btn-warning {
@@ -386,6 +435,18 @@ input[type=checkbox]::after {
     overflow-x: unset;
     padding-bottom: 10vh;
   }
+  #viewToDoList .taskList .task-card-1 {
+    word-wrap: break-word;
+  }
+  #viewToDoList .taskList .task-card-1 .grip {
+    height: 100%;
+    width: 15vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+    font-size: x-large;
+  }
   .nav {
     height: 5vh;
   }
@@ -403,6 +464,15 @@ input[type=checkbox]::after {
   #listView .allLists {
     height: fit-content;
     padding-bottom: 10vh;
+  }
+  #listView .allLists .list-card-1 .grip {
+    height: 100%;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+    font-size: x-large;
   }
 }
 
