@@ -9,6 +9,7 @@ const viewToDoListDiv = document.querySelector('#viewToDoList')
 const addListForm = document.querySelector('#addListForm')
 const listViewHeader = document.querySelector('#listViewHeader')
 const addTaskForm = document.querySelector('#addTaskForm')
+// addTaskForm.style.visibility = 'hidden'
 const addTaskInput = document.querySelector('#addTaskInput')
 const closeListButton = document.querySelector('#closeButton')
 const taskCard = document.querySelector('.task-card-1')
@@ -542,11 +543,12 @@ class renderFunc {
 // Class to handle opening and closing the lists
 class toggleListFunc {
     static closeList() {
+        addTaskForm.style.visibility = 'hidden'
         renderFunc.clearElement(taskListUL)
         let header = listViewHeader
         renderFunc.screenSizeAdjustment()
         header.innerHTML = `
-        <h1>Open a List</h1>
+        <h1></h1>
         <p></p>
         `
     }
@@ -554,6 +556,7 @@ class toggleListFunc {
         let listTasks = list.tasks || []
         const header = listViewHeader
         toggleListFunc.closeList()
+        addTaskForm.style.visibility = 'visible'
         const dateCreated = new Date(+list.id)
         renderFunc.clearElement(header)
         const div = document.createElement('div')
@@ -649,4 +652,11 @@ new Sortable(taskListUL, {
     animation: 150
 })
 
-document.addEventListener('DOMContentLoaded', renderFunc.renderLists())
+document.addEventListener('DOMContentLoaded', ()=>{
+    if(selectedListID === null){
+        addTaskForm.style.visibility = 'hidden'
+    } else {
+        addTaskForm.style.visibility = 'visible'
+    }
+    renderFunc.renderLists()
+})
